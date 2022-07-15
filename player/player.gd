@@ -1,8 +1,10 @@
 extends KinematicBody2D
 
 onready var bullet_scene = preload("res://player/bullet.tscn")
+onready var gun_flash_scene = preload("res://player/gun_flash_effect.tscn")
+onready var sprite = $sprite
+onready var gun_sprite = $sprite_gun
 onready var camera = $camera
-onready var bullet_timer = $bullet_timer
 onready var fan_timer = $fan_timer
 onready var reload_timer = $reload_timer
 
@@ -10,14 +12,13 @@ onready var SCREEN_CENTER = get_viewport_rect().size / 2
 const CAMERA_OFFSET_MULTIPLIER = 0.1
 
 const MOVE_SPEED = 60
-const ROLL_SPEED = 150
+const ROLL_SPEED = 220
 
-const ROLL_DURATION = 0.4
+const ROLL_DURATION = 0.6
 
-const BULLET_SPAWN_RADIUS = 7
-const BULLET_FIRE_DELAY = 0.3
-const BULLET_FIRE_FAN_HAMMER_DELAY = 0.1
-const FAN_TIMEOUT = 0.3
+const BULLET_SPAWN_RADIUS = 16
+const FAN_TIMEOUT = 0.2
+const FAN_MAX_BULLETS = 3
 const RELOAD_DURATION = 1.0
 
 enum State {
@@ -37,13 +38,14 @@ var bullet_fan_ready = false
 var bullet_fanning = false
 var bullet_count = 6
 var bullet_max = 6
-
-var anim_timer: float = 0.0
+var fan_bullet_count = 0
 
 func _ready():
-    bullet_timer.connect("timeout", self, "_on_bullet_timer_finish")
     fan_timer.connect("timeout", self, "_on_fan_timer_finish")
     reload_timer.connect("timeout", self, "_on_reload_timer_finish")
+    sprite.connect("animation_finished", self, "_on_animation_finished")
+    gun_sprite.connect("animation_finished", self, "_on_gun_animation_finished")
+    gun_sprite.play("idle")
 
 func _input(event):
     if event is InputEventMouseMotion:
@@ -84,58 +86,97 @@ func handle_directional_input():
 
 func handle_input():
     handle_directional_input()
-    move_direction = input_direction
+    if state != State.ROLL:
+        move_direction = input_direction
+    if state == State.FAN and move_direction != Vector2.ZERO:
+        state = State.MOVE
 
     # Roll start
     if Input.is_action_just_pressed("roll"):
         roll()
-
+    if Input.is_action_just_pressed("reload"):
+        reload()
     if Input.is_action_just_pressed("shoot"):
         shoot()
 
-func _process(delta):
+
+func _process(_delta):
     handle_input()
 
     var speed: int
     if state == State.MOVE:
         speed = MOVE_SPEED
-        $ColorRect.color = Color(1, 1, 1, 1)
     elif state == State.ROLL:
-        anim_timer -= delta
-        if anim_timer <= 0:
-            state = State.FAN
-            fan_timer.start(FAN_TIMEOUT)
-            set_collision_mask_bit(1, true)
         speed = ROLL_SPEED
     elif state == State.FAN:
-        $ColorRect.color = Color(1, 0, 0, 1)
+        speed = 0
 
     var velocity = speed * move_direction
-    var _actual_velocity = move_and_slide(velocity)
+    var actual_velocity = move_and_slide(velocity)
+
+    update_animation(actual_velocity)
+
+func update_animation(velocity: Vector2):
+    if state == State.ROLL:
+        sprite.play("roll")
+    elif velocity == Vector2.ZERO:
+        sprite.play("idle")
+    else:
+        sprite.play("run")
+
+    if state == State.ROLL:
+        if (move_direction.x < 0 and not sprite.flip_h) or (move_direction.x > 0 and sprite.flip_h):
+            sprite.flip_h = not sprite.flip_h
+    else: 
+        if (aim_direction.x < 0 and not sprite.flip_h) or (aim_direction.x > 0 and sprite.flip_h):
+            sprite.flip_h = not sprite.flip_h
+
+    if bullet_ready:
+        gun_sprite.play("idle")
+
+    gun_sprite.rotation = aim_direction.angle()
+    gun_sprite.flip_v = abs(gun_sprite.rotation_degrees) > 90
+    gun_sprite.visible = state != State.ROLL
+
+func _on_animation_finished():
+    if sprite.animation == "roll":
+        end_roll()
+
+func _on_gun_animation_finished():
+    if gun_sprite.animation == "shoot":
+        gun_sprite.play("idle")
+        bullet_ready = true
 
 func roll():
-    if state == State.MOVE:
-        anim_timer = ROLL_DURATION
+    if state == State.MOVE and move_direction != Vector2.ZERO:
         state = State.ROLL
         set_collision_mask_bit(1, false)
 
+func end_roll():
+    set_collision_mask_bit(1, true)
+    state = State.MOVE
+
 func shoot():
-    if state == State.ROLL:
-        return
-    if not bullet_ready:
-        return 
     if bullet_count == 0:
         return
     if is_reloading():
         return
+    if state != State.FAN and not bullet_ready:
+        return
+    if state == State.FAN and fan_bullet_count == FAN_MAX_BULLETS:
+        return
+
+    if state == State.ROLL:
+        state = State.FAN
+        fan_bullet_count = 0
 
     spawn_bullet()
     bullet_ready = false
-    var delay = BULLET_FIRE_DELAY
     if state == State.FAN:
-        delay = BULLET_FIRE_FAN_HAMMER_DELAY
         fan_timer.start(FAN_TIMEOUT)
-    bullet_timer.start(delay)
+        fan_bullet_count += 1
+    gun_sprite.play("shoot")
+    gun_sprite.frame = 0
 
     bullet_count -= 1
     if bullet_count == 0:
@@ -146,6 +187,11 @@ func spawn_bullet():
     get_parent().add_child(new_bullet)
     new_bullet.position = position + (aim_direction * BULLET_SPAWN_RADIUS)
     new_bullet.start(aim_direction)
+
+    var new_flash = gun_flash_scene.instance()
+    add_child(new_flash)
+    new_flash.rotation = gun_sprite.rotation
+    new_flash.play("default")
 
 func _on_bullet_timer_finish():
     bullet_ready = true

@@ -4,11 +4,15 @@ onready var bullet_scene = preload("res://player/bullet.tscn")
 onready var gun_flash_scene = preload("res://player/gun_flash_effect.tscn")
 onready var bullet_shell_scene = preload("res://bits/bullet_shell.tscn")
 
+onready var entrypoint = get_parent().get_node("player_entrypoint")
+
 onready var sprite = $sprite
 onready var gun_sprite = $sprite_gun
 onready var camera = $camera
 onready var fan_timer = $fan_timer
 onready var reload_timer = $reload_timer
+onready var iframe_timer = $iframe_timer
+onready var iframe_flash_timer = $iframe_flash_timer
 
 onready var SCREEN_CENTER = get_viewport_rect().size / 2
 const CAMERA_OFFSET_MULTIPLIER = 0.5
@@ -23,13 +27,19 @@ const FAN_DELAY = 0.1
 const FAN_MAX_BULLETS = 3
 const RELOAD_DURATION = 1.0
 
+const IFRAME_DURATION = 2.0
+const IFRAME_FLASH_DURATION = 0.2
+
 enum State {
+    ENTER,
     MOVE,
     ROLL,
-    FAN
+    FAN,
+    DEAD,
+    DICE
 }
 
-var state = State.MOVE
+var state = State.ENTER
 
 var predicted_position = position
 var predicted_aim_position = position
@@ -46,15 +56,25 @@ var bullet_max = 6
 var fan_bullet_count = 0
 
 var health = 4
+var max_health = 4
+
+var sprites_visible = true
+
+var has_rolled_dice = false
 
 func _ready():
     fan_timer.connect("timeout", self, "_on_fan_timer_finish")
     reload_timer.connect("timeout", self, "_on_reload_timer_finish")
+    iframe_timer.connect("timeout", self, "_on_iframe_timer_finish")
+    iframe_flash_timer.connect("timeout", self, "_on_iframe_flash_timer_finish")
     sprite.connect("animation_finished", self, "_on_animation_finished")
     gun_sprite.connect("animation_finished", self, "_on_gun_animation_finished")
     gun_sprite.play("idle")
 
 func _input(event):
+    if state == State.DEAD or state == State.DICE:
+        return
+
     if event is InputEventMouseMotion:
         var mouse_offset = event.position - SCREEN_CENTER
         aim_direction = mouse_offset.normalized()
@@ -93,6 +113,16 @@ func handle_directional_input():
 
 func handle_input():
     handle_directional_input()
+
+    if state == State.ENTER:
+        move_direction = position.direction_to(entrypoint.position)
+        aim_direction = move_direction
+        return
+
+    if state == State.DICE:
+        move_direction = Vector2.ZERO
+        return
+
     if state != State.ROLL:
         move_direction = input_direction
     if state == State.FAN and move_direction != Vector2.ZERO:
@@ -105,9 +135,13 @@ func handle_input():
         reload()
     if Input.is_action_just_pressed("shoot"):
         shoot()
-
+    if Input.is_action_just_pressed("interact"):
+        dice()
 
 func _process(_delta):
+    if state == State.DEAD:
+        return
+
     handle_input()
 
     var speed: int
@@ -117,13 +151,16 @@ func _process(_delta):
         speed = ROLL_SPEED
     elif state == State.FAN:
         speed = 0
+    elif state == State.ENTER:
+        speed = MOVE_SPEED
+        if position.distance_to(entrypoint.position) <= 5:
+            state = State.MOVE
 
     var velocity = speed * move_direction
     var actual_velocity = move_and_slide(velocity)
 
     predicted_position = position + (actual_velocity * 5)
     predicted_aim_position = position + (actual_velocity * 0.5)
-    $ColorRect.rect_position = predicted_position - position
 
     update_animation(actual_velocity)
 
@@ -142,12 +179,14 @@ func update_animation(velocity: Vector2):
         if (aim_direction.x < 0 and not sprite.flip_h) or (aim_direction.x > 0 and sprite.flip_h):
             sprite.flip_h = not sprite.flip_h
 
+    sprite.visible = sprites_visible
+
     if bullet_ready:
         gun_sprite.play("idle")
 
     gun_sprite.rotation = aim_direction.angle()
     gun_sprite.flip_v = abs(gun_sprite.rotation_degrees) > 90
-    gun_sprite.visible = state != State.ROLL
+    gun_sprite.visible = sprites_visible and state != State.ROLL
 
 func _on_animation_finished():
     if sprite.animation == "roll":
@@ -228,6 +267,36 @@ func _on_reload_timer_finish():
     bullet_count = bullet_max
 
 func handle_enemy_bullet():
+    if has_iframes():
+        return
     health -= 1
+    iframe_start()
     if health <= 0:
-        queue_free()
+        die()
+
+func die():
+    state = State.DEAD
+    sprite.visible = false
+    gun_sprite.visible = false
+
+func iframe_start():
+    iframe_timer.start(IFRAME_DURATION)
+    iframe_flash_timer.start(IFRAME_FLASH_DURATION)
+    sprites_visible = false
+
+func has_iframes():
+    return not iframe_timer.is_stopped()
+
+func _on_iframe_timer_finish():
+    iframe_flash_timer.stop()
+    sprites_visible = true
+
+func _on_iframe_flash_timer_finish():
+    sprites_visible = not sprites_visible
+
+func dice():
+    if get_tree().get_nodes_in_group("enemies").size() != 0:
+        return
+    if has_rolled_dice:
+        return
+    state = State.DICE

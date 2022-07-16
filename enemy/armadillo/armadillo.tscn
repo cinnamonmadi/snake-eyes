@@ -105,6 +105,8 @@ animations = [ {
 extents = Vector2( 8, 8 )
 
 [node name="armadillo" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource( 5 )
 
 [node name="gun_sprite" type="AnimatedSprite" parent="."]
@@ -115,7 +117,7 @@ playing = true
 [node name="sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 18 )
 animation = "idle"
-frame = 1
+frame = 2
 playing = true
 
 [node name="collider" type="CollisionShape2D" parent="."]

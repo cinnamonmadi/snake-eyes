@@ -10,8 +10,8 @@ onready var shoot_timer = $shoot_timer
 
 const BULLET_SPAWN_RADIUS = 20
 
-export var MOVE_SPEED = 40
-export var SEARCH_RADIUS = 300
+export var MOVE_SPEED = 20
+export var BULLET_SPEED = 80
 export var STRAFE_RADIUS = 100
 export var FIRE_RADIUS = 150
 
@@ -28,6 +28,8 @@ var aim_direction = Vector2.ZERO
 var health = 3
 
 func _ready():
+    add_to_group("enemies")
+
     sprite.connect("animation_finished", self, "_on_animation_finished")
     gun_sprite.connect("animation_finished", self, "_on_gun_animation_finished")
     gun_sprite.play("idle")
@@ -35,7 +37,7 @@ func _ready():
 func _process(_delta):
     var velocity = Vector2.ZERO
 
-    if state == State.MOVE and player.position.distance_to(position) <= SEARCH_RADIUS:
+    if state == State.MOVE: 
         aim_direction = position.direction_to(player.predicted_aim_position)
         if player.predicted_position.distance_to(position) > STRAFE_RADIUS:
             velocity = position.direction_to(player.predicted_position) * MOVE_SPEED
@@ -78,5 +80,6 @@ func shoot():
     var bullet_direction = aim_direction.rotated(deg2rad(global.rng.randf_range(-10, 10)))
     new_bullet.position = position + (aim_direction * BULLET_SPAWN_RADIUS)
     new_bullet.start(bullet_direction)
+    new_bullet.SPEED = BULLET_SPEED
 
     shoot_timer.start(global.rng.randf_range(0.5, 3.0))

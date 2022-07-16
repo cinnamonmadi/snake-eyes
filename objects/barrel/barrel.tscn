@@ -28,6 +28,7 @@ animations = [ {
 extents = Vector2( 5, 7 )
 
 [node name="barrel" type="StaticBody2D"]
+collision_mask = 3
 script = ExtResource( 2 )
 piece_scene_path = "res://bits/barrel_piece.tscn"
 

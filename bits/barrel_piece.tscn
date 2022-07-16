@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://bits/barrel_pieces.png" type="Texture" id=1]
+[ext_resource path="res://bits/bit.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 3, 3 )
+
+[node name="barrel_piece" type="Area2D"]
+script = ExtResource( 2 )
+despawn_duration = 2.0
+
+[node name="sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+hframes = 7
+
+[node name="collider" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="despawn_timer" type="Timer" parent="."]

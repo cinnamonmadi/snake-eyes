@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 onready var bullet_scene = preload("res://player/bullet.tscn")
 onready var gun_flash_scene = preload("res://player/gun_flash_effect.tscn")
+onready var bullet_shell_scene = preload("res://bits/bullet_shell.tscn")
+
 onready var sprite = $sprite
 onready var gun_sprite = $sprite_gun
 onready var camera = $camera
@@ -192,6 +194,11 @@ func spawn_bullet():
     add_child(new_flash)
     new_flash.rotation = gun_sprite.rotation
     new_flash.play("default")
+
+    var new_shell = bullet_shell_scene.instance()
+    get_parent().add_child(new_shell)
+    new_shell.set_position_3d(position + (aim_direction * BULLET_SPAWN_RADIUS), 20)
+    new_shell.set_velocity_3d(aim_direction.rotated(deg2rad(180)) * 70, 120)
 
 func _on_bullet_timer_finish():
     bullet_ready = true

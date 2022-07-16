@@ -1,4 +1,5 @@
 extends Area2D
+class_name Bit
 
 onready var despawn_timer = $despawn_timer
 onready var sprite = $sprite
@@ -12,6 +13,7 @@ export var rotation_speed: float = 0.0
 var position_3d = Vector3.ZERO
 var velocity_3d = Vector3.ZERO
 var rotation_velocity: float = 0.0
+var use_3d_coordinates = true
 
 func _ready():
     despawn_timer.connect("timeout", self, "_on_despawn_timer_finish")
@@ -20,6 +22,7 @@ func _ready():
 
 func set_position_3d(position_2d: Vector2, start_height: float):
     position_3d = Vector3(position_2d.x, position_2d.y + start_height, start_height)
+    position = Vector2(position_3d.x, position_3d.y - position_3d.z)
 
 func set_velocity_3d(velocity_2d: Vector2, start_vz: float):
     velocity_3d = Vector3(velocity_2d.x, velocity_2d.y / 2, start_vz)
@@ -46,7 +49,8 @@ func _process(delta):
             sprite.stop()
         rotation_velocity = 0.0
 
-    position = Vector2(position_3d.x, position_3d.y - position_3d.z)
+    if use_3d_coordinates:
+        position = Vector2(position_3d.x, position_3d.y - position_3d.z)
 
 func _on_despawn_timer_finish():
     queue_free()

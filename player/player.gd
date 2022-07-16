@@ -11,7 +11,7 @@ onready var fan_timer = $fan_timer
 onready var reload_timer = $reload_timer
 
 onready var SCREEN_CENTER = get_viewport_rect().size / 2
-const CAMERA_OFFSET_MULTIPLIER = 0.1
+const CAMERA_OFFSET_MULTIPLIER = 0.5
 
 const MOVE_SPEED = 60
 const ROLL_SPEED = 220
@@ -19,7 +19,7 @@ const ROLL_SPEED = 220
 const ROLL_DURATION = 0.6
 
 const BULLET_SPAWN_RADIUS = 16
-const FAN_TIMEOUT = 0.2
+const FAN_DELAY = 0.1
 const FAN_MAX_BULLETS = 3
 const RELOAD_DURATION = 1.0
 
@@ -31,6 +31,9 @@ enum State {
 
 var state = State.MOVE
 
+var predicted_position = position
+var predicted_aim_position = position
+
 var input_direction = Vector2.ZERO
 var move_direction = Vector2.ZERO
 var aim_direction = Vector2.ZERO
@@ -41,6 +44,8 @@ var bullet_fanning = false
 var bullet_count = 6
 var bullet_max = 6
 var fan_bullet_count = 0
+
+var health = 4
 
 func _ready():
     fan_timer.connect("timeout", self, "_on_fan_timer_finish")
@@ -116,6 +121,10 @@ func _process(_delta):
     var velocity = speed * move_direction
     var actual_velocity = move_and_slide(velocity)
 
+    predicted_position = position + (actual_velocity * 5)
+    predicted_aim_position = position + (actual_velocity * 0.5)
+    $ColorRect.rect_position = predicted_position - position
+
     update_animation(actual_velocity)
 
 func update_animation(velocity: Vector2):
@@ -175,8 +184,11 @@ func shoot():
     spawn_bullet()
     bullet_ready = false
     if state == State.FAN:
-        fan_timer.start(FAN_TIMEOUT)
         fan_bullet_count += 1
+        if bullet_count == 0 or fan_bullet_count == FAN_MAX_BULLETS:
+            state = State.MOVE
+        else:
+            fan_timer.start(FAN_DELAY)
     gun_sprite.play("shoot")
     gun_sprite.frame = 0
 
@@ -204,7 +216,7 @@ func _on_bullet_timer_finish():
     bullet_ready = true
 
 func _on_fan_timer_finish():
-    state = State.MOVE
+    shoot()
 
 func reload():
     reload_timer.start(RELOAD_DURATION)
@@ -214,3 +226,8 @@ func is_reloading():
 
 func _on_reload_timer_finish():
     bullet_count = bullet_max
+
+func handle_enemy_bullet():
+    health -= 1
+    if health <= 0:
+        queue_free()

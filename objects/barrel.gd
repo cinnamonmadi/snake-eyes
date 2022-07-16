@@ -3,7 +3,7 @@ extends StaticBody2D
 onready var global = get_node("/root/Global")
 onready var sprite = $sprite
 
-var health = 3
+var health = 1
 var piece_scene
 export var piece_scene_path = ""
 export var piece_variants = 7
@@ -34,5 +34,7 @@ func die():
         new_piece.set_velocity_3d(piece_direction * 40, 40)
         new_piece.rotation_speed = 20
         get_parent().add_child(new_piece)
+
+    get_parent().spawn_treasure_bomb(position, 3)
 
     queue_free()

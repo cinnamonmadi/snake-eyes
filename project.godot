@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Area2D",
+"class": "Bit",
+"language": "GDScript",
+"path": "res://bits/bit.gd"
+} ]
+_global_script_class_icons={
+"Bit": ""
+}
+
 [application]
 
 config/name="snake-eyes"

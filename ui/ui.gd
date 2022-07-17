@@ -16,6 +16,9 @@ var button_roll_br
 
 var display_gg = false
 
+var coins = 0
+var coin_icon_ranges = [9, 99, 999, 9999, 99999]
+
 func _ready():
     dice_roll_screen.connect("animation_finished", self, "_on_dice_roll_animation_finished")
 
@@ -39,6 +42,7 @@ func _process(delta):
     buttons.visible = false
     if dice_roll_screen.visible:
         if dice_roll_screen.animation == "default":
+            $dice_roll/dialog/Label.percent_visible += 0.3 * delta
             buttons.visible = true
             if Input.is_action_just_pressed("shoot"):
                 if mouse_in_rect(button_exit_tl, button_exit_br):
@@ -46,6 +50,7 @@ func _process(delta):
                     dice_roll_screen.visible = false
                     get_parent().open_exit_room()
                 elif mouse_in_rect(button_roll_tl, button_roll_br):
+                    $dice_roll/dialog.visible = false
                     dice_roll_screen.play("roll")
         elif dice_roll_screen.animation == "results":
             if Input.is_action_just_pressed("shoot"):
@@ -53,15 +58,22 @@ func _process(delta):
                 dice_roll_screen.visible = false
                 get_parent().open_next_room("res://world.tscn")
 
-    if player.bullet_count != bullet_count or player.bullet_max != bullet_max or is_reloading != player.is_reloading():
+    if player.bullet_count != bullet_count: 
         bullet_count = player.bullet_count
-        bullet_max = player.bullet_max
         is_reloading = player.is_reloading()
         if is_reloading:
             ammo_label.text = "Reloading..."
         else:
             ammo_label.text = String(bullet_count) + " / " + String(bullet_max)
+    if player.coins != coins:
+        coins = player.coins
+        $coin_purse/label.text = String(coins)
+        for i in range(0, coin_icon_ranges.size()):
+            if coins <= coin_icon_ranges[i]:
+                $coin_purse.frame = i
+                break
     ammo_label.visible = player.state != player.State.DEAD
+    $coin_purse.visible = player.state != player.State.DEAD
 
 func _on_dice_roll_animation_finished():
     if dice_roll_screen.animation == "roll":

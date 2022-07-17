@@ -6,6 +6,7 @@ onready var bullet_scene = preload("res://enemy/enemy_bullet.tscn")
 var gun_flash_scene = null
 
 onready var sprite = $sprite
+onready var collider = $collider
 onready var gun_sprite = $gun_sprite
 onready var shoot_timer = $shoot_timer
 
@@ -51,7 +52,7 @@ func _process(_delta):
         aim_direction = position.direction_to(player.predicted_aim_position)
         if player.predicted_position.distance_to(position) > STRAFE_RADIUS:
             velocity = position.direction_to(player.predicted_position) * MOVE_SPEED
-        if shoot_timer.is_stopped() and player.position.distance_to(position) <= FIRE_RADIUS:
+        if shoot_timer.is_stopped() and gun_sprite.animation == "idle" and player.position.distance_to(position) <= FIRE_RADIUS:
             shoot()
 
     if state == State.DEATH and sprite.frame == treasure_bomb_frame and not has_treasure_bombed:
@@ -86,6 +87,11 @@ func _on_animation_finished():
     elif sprite.animation == "death":
         die()
 
+func _on_gun_animation_finished():
+    if gun_sprite.animation == "shoot":
+        gun_sprite.play("idle")
+        shoot_timer.start(global.rng.randf_range(0.5, 3.0))
+
 func handle_player_bullet():
     if state == State.DEATH:
         return
@@ -108,11 +114,12 @@ func shoot():
         new_flash.rotation = gun_sprite.rotation
         new_flash.play("default")
 
-    shoot_timer.start(global.rng.randf_range(0.5, 3.0))
+    gun_sprite.play("shoot")
 
 func start_death():
     state = State.DEATH
     sprite.play("death")
+    collider.disabled = true
 
 func die():
     if treasure_bomb_frame == -1:

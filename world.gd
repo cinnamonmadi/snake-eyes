@@ -36,6 +36,7 @@ func load_next_room(path):
     var current_player = get_node("player")
     var next_player = next_room.get_node("player")
     next_player.health = current_player.health
+    next_player.coins = current_player.coins
 
     state = State.FADE_OUT
     fader.fade_out()

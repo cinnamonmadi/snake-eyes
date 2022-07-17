@@ -61,7 +61,7 @@ var bullet_max = 6
 var fan_bullet_count = 0
 
 var health = 4
-var max_health = 4
+var coins = 0
 
 var sprites_visible = true
 var is_hovering_table = false

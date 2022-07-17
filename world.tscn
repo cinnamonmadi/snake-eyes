@@ -5,7 +5,7 @@
 [ext_resource path="res://objects/barrel/barrel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://tiles.tres" type="TileSet" id=4]
 [ext_resource path="res://world.gd" type="Script" id=5]
-[ext_resource path="res://enemy/armadillo/armadillo.tscn" type="PackedScene" id=6]
+[ext_resource path="res://enemy/snake/snake.tscn" type="PackedScene" id=6]
 [ext_resource path="res://objects/crate/crate.tscn" type="PackedScene" id=7]
 [ext_resource path="res://ui/fade.tscn" type="PackedScene" id=8]
 [ext_resource path="res://door.tscn" type="PackedScene" id=9]
@@ -91,14 +91,5 @@ position = Vector2( 528, 128 )
 [node name="exit_door" parent="." instance=ExtResource( 9 )]
 position = Vector2( 732, 36 )
 
-[node name="armadillo" parent="." instance=ExtResource( 6 )]
-position = Vector2( 476, 108 )
-
-[node name="armadillo2" parent="." instance=ExtResource( 6 )]
-position = Vector2( 468, 176 )
-
-[node name="armadillo3" parent="." instance=ExtResource( 6 )]
-position = Vector2( 392, 80 )
-
-[node name="armadillo4" parent="." instance=ExtResource( 6 )]
-position = Vector2( 440, 240 )
+[node name="snake" parent="." instance=ExtResource( 6 )]
+position = Vector2( 140, 232 )

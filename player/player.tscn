@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=66 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/gun_shoot.png" type="Texture" id=2]
@@ -9,9 +9,42 @@
 [ext_resource path="res://player/player_death.png" type="Texture" id=7]
 [ext_resource path="res://player/player_shadow.png" type="Texture" id=8]
 [ext_resource path="res://player/spotlight.png" type="Texture" id=9]
+[ext_resource path="res://player/gun_reload.png" type="Texture" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 8 )
+
+[sub_resource type="AtlasTexture" id=57]
+atlas = ExtResource( 10 )
+region = Rect2( 0, 0, 50, 30 )
+
+[sub_resource type="AtlasTexture" id=58]
+atlas = ExtResource( 10 )
+region = Rect2( 50, 0, 50, 30 )
+
+[sub_resource type="AtlasTexture" id=59]
+atlas = ExtResource( 10 )
+region = Rect2( 100, 0, 50, 30 )
+
+[sub_resource type="AtlasTexture" id=60]
+atlas = ExtResource( 10 )
+region = Rect2( 150, 0, 50, 30 )
+
+[sub_resource type="AtlasTexture" id=61]
+atlas = ExtResource( 10 )
+region = Rect2( 200, 0, 50, 30 )
+
+[sub_resource type="AtlasTexture" id=62]
+atlas = ExtResource( 10 )
+region = Rect2( 250, 0, 50, 30 )
+
+[sub_resource type="AtlasTexture" id=63]
+atlas = ExtResource( 10 )
+region = Rect2( 300, 0, 50, 30 )
+
+[sub_resource type="AtlasTexture" id=64]
+atlas = ExtResource( 10 )
+region = Rect2( 350, 0, 50, 30 )
 
 [sub_resource type="AtlasTexture" id=27]
 atlas = ExtResource( 5 )
@@ -35,6 +68,11 @@ region = Rect2( 150, 0, 50, 30 )
 
 [sub_resource type="SpriteFrames" id=21]
 animations = [ {
+"frames": [ SubResource( 57 ), SubResource( 58 ), SubResource( 59 ), SubResource( 60 ), SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ) ],
+"loop": true,
+"name": "reload",
+"speed": 9.0
+}, {
 "frames": [ SubResource( 27 ) ],
 "loop": true,
 "name": "idle",
@@ -43,7 +81,7 @@ animations = [ {
 "frames": [ SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ) ],
 "loop": true,
 "name": "shoot",
-"speed": 12.0
+"speed": 14.0
 } ]
 
 [sub_resource type="AtlasTexture" id=2]

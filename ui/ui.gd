@@ -7,6 +7,7 @@ onready var dice_roll_screen = $dice_roll
 onready var dice_right_face = $dice_roll/rightface
 onready var dice_left_face = $dice_roll/leftface
 onready var buttons = $buttons
+onready var continue_timer = $continue_timer
 
 var is_reloading = false
 var bullet_count = 6
@@ -16,8 +17,11 @@ var button_exit_tl
 var button_exit_br
 var button_roll_tl
 var button_roll_br
+var button_continue_tl
+var button_continue_br
 
 var display_gg = false
+var continue_countdown = -1
 
 var coins = 0
 var coin_icon_ranges = [9, 99, 999, 9999, 99999]
@@ -31,6 +35,10 @@ enum DiceFace {
     MONEY_3,
     MONEY_4,
     HEART,
+    SNAKE_1,
+    SNAKE_2,
+    SNAKE_3,
+    ARMADILLO_SNAKE,
 }
 
 var dice_frame = 0
@@ -38,12 +46,17 @@ var dice_right_value
 var dice_left_value
 
 func _ready():
+    continue_timer.connect("timeout", self, "_on_continue_timeout")
     dice_roll_screen.connect("animation_finished", self, "_on_dice_roll_animation_finished")
 
     button_exit_tl = $buttons.position + $buttons/exit_button.position + $buttons/exit_button/collider.position - $buttons/exit_button/collider.shape.extents
     button_exit_br = $buttons.position + $buttons/exit_button.position + $buttons/exit_button/collider.position + $buttons/exit_button/collider.shape.extents
     button_roll_tl = $buttons.position + $buttons/roll_button.position + $buttons/roll_button/collider.position - $buttons/roll_button/collider.shape.extents
     button_roll_br = $buttons.position + $buttons/roll_button.position + $buttons/roll_button/collider.position + $buttons/roll_button/collider.shape.extents
+
+    var continue_button_extends = Vector2(96, 20) / 2
+    button_continue_tl = $gg.position + $gg/continue.position - continue_button_extends
+    button_continue_br = $gg.position + $gg/continue.position + continue_button_extends
 
 func mouse_in_rect(top_left: Vector2, bot_right: Vector2):
     var mouse_pos = get_viewport().get_mouse_position()
@@ -55,6 +68,18 @@ func _process(delta):
 
     if display_gg and $gg.modulate.a < 1.0:
         $gg.modulate.a = min(1.0, $gg.modulate.a + (1.0 * delta))
+        if $gg.modulate.a >= 1.0 and continue_countdown == -1:
+            continue_countdown = 10
+            continue_timer.start(1.0)
+            player.reset_values()
+
+    if continue_countdown != -1:
+        $gg/continue.visible = true
+        $gg/continue/countdown.text = String(continue_countdown)
+        if continue_countdown != 0 and Input.is_action_just_pressed("shoot"):
+            if mouse_in_rect(button_continue_tl, button_continue_br):
+                get_parent().load_next_room("res://world.tscn")
+                continue_countdown = -1
 
     dice_roll_screen.visible = player.state == player.State.DICE
     buttons.visible = false
@@ -93,7 +118,7 @@ func _process(delta):
 
     if player.bullet_count != bullet_count: 
         bullet_count = player.bullet_count
-        is_reloading = player.is_reloading()
+        is_reloading = player.is_reloading
         if is_reloading:
             ammo_label.text = "Reloading..."
         else:
@@ -105,8 +130,10 @@ func _process(delta):
             if coins <= coin_icon_ranges[i]:
                 $coin_purse.frame = i
                 break
-    ammo_label.visible = player.state != player.State.DEAD
-    $coin_purse.visible = player.state != player.State.DEAD
+    var hud_visible = player.state != player.State.DEAD and not dice_roll_screen.visible
+    $health.visible = hud_visible
+    ammo_label.visible = hud_visible
+    $coin_purse.visible = hud_visible
 
 func _on_dice_roll_animation_finished():
     if dice_roll_screen.animation == "roll":
@@ -116,7 +143,12 @@ func flash_gg():
     display_gg = true
 
 func set_dice_values():
-    print("hi")
-    print(DiceFace.ARMADILLO_1)
-    dice_right_value = global.rng.randi_range(DiceFace.ARMADILLO_1, DiceFace.ARMADILLO_3)
+    dice_right_value = global.rng.randi_range(0, 7)
+    if dice_right_value >= 3:
+        dice_right_value = DiceFace.SNAKE_1 + (dice_right_value - 3)
     dice_left_value = global.rng.randi_range(DiceFace.MONEY_1, DiceFace.HEART)
+
+func _on_continue_timeout():
+    continue_countdown -= 1
+    if continue_countdown != 0:
+        continue_timer.start(1.0)

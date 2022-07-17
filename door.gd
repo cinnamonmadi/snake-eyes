@@ -9,6 +9,8 @@ export var next_room_path = "res://exit_room.tscn"
 var is_open = false
 
 func _ready():
+    add_to_group("clear_on_death")
+
     sprite.connect("animation_finished", self, "_on_animation_finished")
     player_scan_area.connect("body_entered", self, "_on_body_entered")
 

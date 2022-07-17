@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://enemy/enemy_bullet.gd" type="Script" id=1]
-[ext_resource path="res://player/gun_bullet.png" type="Texture" id=2]
+[ext_resource path="res://enemy/armadillo/enemy_bullet.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 1 )
+extents = Vector2( 3, 3 )
 
 [node name="bullet" type="Area2D"]
 collision_layer = 2

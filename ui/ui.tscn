@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://ui/ui.gd" type="Script" id=1]
 [ext_resource path="res://ui/ui_diceroll.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://ui/ui_playerhead.png" type="Texture" id=8]
 [ext_resource path="res://ui/ui_textbox.png" type="Texture" id=9]
 [ext_resource path="res://ui/ui_diceroll_icons.png" type="Texture" id=10]
+[ext_resource path="res://ui/ui_continue.png" type="Texture" id=11]
 
 [sub_resource type="DynamicFont" id=58]
 size = 12
@@ -156,6 +157,9 @@ font_data = ExtResource( 7 )
 [sub_resource type="RectangleShape2D" id=28]
 extents = Vector2( 42, 18 )
 
+[sub_resource type="DynamicFont" id=60]
+font_data = ExtResource( 7 )
+
 [node name="ui" type="CanvasLayer"]
 script = ExtResource( 1 )
 
@@ -266,5 +270,27 @@ shape = SubResource( 28 )
 
 [node name="gg" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 240, 120 )
+position = Vector2( 240, 96 )
 texture = ExtResource( 5 )
+
+[node name="continue" type="Sprite" parent="gg"]
+visible = false
+position = Vector2( 0, 48 )
+texture = ExtResource( 11 )
+hframes = 2
+
+[node name="countdown" type="Label" parent="gg/continue"]
+margin_left = -24.0
+margin_top = -40.0
+margin_right = 16.0
+margin_bottom = -24.0
+custom_colors/font_color = Color( 1, 1, 0, 1 )
+custom_fonts/font = SubResource( 60 )
+text = "10"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="continue_timer" type="Timer" parent="."]
+one_shot = true

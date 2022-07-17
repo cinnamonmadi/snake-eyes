@@ -1,6 +1,5 @@
 extends DungeonRoom
 
-onready var player = get_node("player")
 onready var table = $table
 onready var table_outline = $table/outline
 onready var table_collider = $table/collider
@@ -26,9 +25,10 @@ func _process(_delta):
 
     player.is_hovering_table = table_outline.visible
 
-func open_next_room(next_room_path: String):
+func open_next_room(next_room_path: String, loot_type: int):
     door_next.open()
     door_next.next_room_path = next_room_path
+    door_next.next_room_loot_type = loot_type
     decision_made = true
 
 func open_exit_room():

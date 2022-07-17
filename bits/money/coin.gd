@@ -4,6 +4,7 @@ onready var global = get_node("/root/Global")
 onready var player = get_parent().get_node("player")
 
 var follow_player = false
+export var value = 1
 
 func _ready():
     var _return_value = self.connect("body_entered", self, "_on_body_entered")
@@ -19,7 +20,10 @@ func _process(delta):
 func _on_body_entered(body):
     if body.name == "player":
         sprite.play("collect_" + String(global.rng.randi_range(1, 3)))
-        player.coins += 1
+        if value == -1:
+            player.health = 4
+        else:
+            player.coins += value
 
 func _on_animation_finished():
     if sprite.animation.begins_with("collect"):

@@ -78,8 +78,13 @@ func _process(delta):
         $gg/continue/countdown.text = String(continue_countdown)
         if continue_countdown != 0 and Input.is_action_just_pressed("shoot"):
             if mouse_in_rect(button_continue_tl, button_continue_br):
-                get_parent().load_next_room("res://world.tscn")
+                get_parent().load_next_room("res://level_first.tscn", Safe.LootType.COIN_1)
                 continue_countdown = -1
+        elif continue_countdown == 0:
+            print("hi")
+            var title_scene = load("res://title/title.tscn")
+            get_parent().get_parent().add_child(title_scene.instance())
+            get_parent().queue_free()
 
     dice_roll_screen.visible = player.state == player.State.DICE
     buttons.visible = false
@@ -101,7 +106,7 @@ func _process(delta):
             if Input.is_action_just_pressed("shoot"):
                 player.state = player.State.MOVE
                 dice_roll_screen.visible = false
-                get_parent().open_next_room("res://world.tscn")
+                get_parent().open_next_room(get_next_room(), get_next_loot_type())
         elif dice_roll_screen.animation == "roll":
             if dice_roll_screen.frame == 15:
                 dice_frame = 1
@@ -152,3 +157,23 @@ func _on_continue_timeout():
     continue_countdown -= 1
     if continue_countdown != 0:
         continue_timer.start(1.0)
+
+func get_next_loot_type():
+    if dice_left_value == DiceFace.MONEY_1:
+        return Safe.LootType.COIN_1
+    elif dice_left_value == DiceFace.MONEY_2:
+        return Safe.LootType.COIN_2
+    elif dice_left_value == DiceFace.MONEY_3:
+        return Safe.LootType.COIN_3
+    elif dice_left_value == DiceFace.MONEY_4:
+        return Safe.LootType.COIN_4
+    elif dice_left_value == DiceFace.HEART:
+        return Safe.LootType.HEART
+
+func get_next_room():
+    if [DiceFace.ARMADILLO_1, DiceFace.ARMADILLO_2, DiceFace.ARMADILLO_3].has(dice_right_value):
+        return "res://level_armadillo.tscn"
+    elif [DiceFace.SNAKE_1, DiceFace.SNAKE_2, DiceFace.SNAKE_3].has(dice_right_value):
+        return "res://level_snake2.tscn"
+    else:
+        return "res://level_snake.tscn"

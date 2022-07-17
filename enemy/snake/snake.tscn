@@ -177,4 +177,4 @@ shape = SubResource( 19 )
 [node name="shoot_timer" type="Timer" parent="."]
 one_shot = true
 
-[node name="raycast" type="RayCast2D" parent="."]
+[node name="path_timer" type="Timer" parent="."]

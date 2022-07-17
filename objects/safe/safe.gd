@@ -1,20 +1,45 @@
 extends StaticBody2D
+class_name Safe
 
 onready var global = get_node("/root/Global")
 onready var sprite = $sprite
+onready var timer = $timer
 
-var health = 1
+var health = 3
 var piece_scene
 export var piece_scene_path = ""
 export var piece_variants = 7
 export var piece_count = 7
+var loot_type
+
+enum LootType {
+    COIN_1,
+    COIN_2,
+    COIN_3,
+    COIN_4,
+    HEART
+}
 
 func _ready():
     add_to_group("clear_on_death")
 
+    visible = false
+    $collider.disabled = true
+    sprite.stop()
+
     piece_scene = load(piece_scene_path)
     sprite.connect("animation_finished", self, "_on_animation_finished")
+    timer.connect("timeout", self, "_on_timer_timeout")
+
+func spawn(with_loop_type: int):
+    loot_type = with_loop_type
+    visible = true
+    $collider.disabled = false
+    timer.start(15.0)
     sprite.play("idle")
+
+func _on_timer_timeout():
+    sprite.play("sheen")
 
 func handle_player_bullet():
     if health <= 0:
@@ -28,6 +53,8 @@ func _on_animation_finished():
             die()
         else:
             sprite.play("idle")
+    elif sprite.animation == "death":
+        queue_free()
 
 func die():
     for _i in range(0, piece_count):
@@ -39,6 +66,16 @@ func die():
         new_piece.rotation_speed = 20
         get_parent().add_child(new_piece)
 
-    get_parent().spawn_treasure_bomb(position, 3)
-
-    queue_free()
+    var value
+    if loot_type == LootType.COIN_1:
+        value = 10
+    elif loot_type == LootType.COIN_2:
+        value = 100
+    elif loot_type == LootType.COIN_3:
+        value = 1000
+    elif loot_type == LootType.COIN_4:
+        value = 5000
+    else:
+        value = -1
+    get_parent().spawn_treasure_bomb(position, value)
+    sprite.play("death")

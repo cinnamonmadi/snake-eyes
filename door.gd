@@ -5,6 +5,8 @@ onready var collider = $collider
 onready var player_scan_area = $player_scan_area
 
 export var next_room_path = "res://exit_room.tscn"
+export var next_room_loot_type = Safe.LootType.COIN_1
+export var is_exit_door = false
 
 var is_open = false
 
@@ -23,9 +25,9 @@ func close():
         sprite.play("close")
 
 func _process(_delta):
-    if sprite.animation == "open" and sprite.frame == 2:
+    if not is_open and sprite.animation == "open" and sprite.frame == 2:
         is_open = true
-    if sprite.animation == "closed" and sprite.frame == 2:
+    elif is_open and sprite.animation == "closed" and sprite.frame == 2:
         is_open = false
 
 func _on_animation_finished():
@@ -37,4 +39,11 @@ func _on_animation_finished():
 func _on_body_entered(body):
     if not is_open or body.name != "player":
         return
-    get_parent().load_next_room(next_room_path)
+    if is_exit_door:
+        var global = get_node("/root/Global")
+        var scoreboard = load("res://title/scoreboard.tscn")
+        global.submit_score(body.coins)
+        get_parent().get_parent().add_child(scoreboard.instance())
+        get_parent().free()
+    else:
+        get_parent().load_next_room(next_room_path, next_room_loot_type)

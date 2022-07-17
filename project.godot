@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "DungeonRoom",
 "language": "GDScript",
 "path": "res://world.gd"
+}, {
+"base": "StaticBody2D",
+"class": "Safe",
+"language": "GDScript",
+"path": "res://objects/safe/safe.gd"
 } ]
 _global_script_class_icons={
 "Bit": "",
-"DungeonRoom": ""
+"DungeonRoom": "",
+"Safe": ""
 }
 
 [application]

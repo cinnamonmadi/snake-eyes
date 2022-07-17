@@ -2,11 +2,11 @@ extends KinematicBody2D
 
 onready var global = get_node("/root/Global")
 onready var player = get_parent().get_node("player")
+onready var nav = get_parent().get_node("nav")
 
 onready var sprite = $sprite
 onready var collider = $collider
 onready var shoot_timer = $shoot_timer
-onready var raycast = $raycast
 
 export var MOVE_SPEED = 40
 export var STRAFE_RADIUS = 100
@@ -35,7 +35,6 @@ func _ready():
     add_to_group("clear_on_death")
 
     sprite.connect("animation_finished", self, "_on_animation_finished")
-    raycast.add_exception(player)
 
 func _process(_delta):
     var velocity = Vector2.ZERO
@@ -44,10 +43,6 @@ func _process(_delta):
         aim_direction = position.direction_to(player.predicted_aim_position)
 
         velocity = position.direction_to(player.position) * MOVE_SPEED
-        raycast.cast_to = velocity.normalized() * 50
-        raycast.force_raycast_update()
-        if raycast.is_colliding():
-            velocity = velocity.rotated(deg2rad(30))
 
         if player.position.distance_to(position) <= ATTACK_RADIUS:
             attack()

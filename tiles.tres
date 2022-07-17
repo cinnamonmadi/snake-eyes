@@ -1,6 +1,14 @@
-[gd_resource type="TileSet" load_steps=56 format=2]
+[gd_resource type="TileSet" load_steps=60 format=2]
 
 [ext_resource path="res://tilemap.png" type="Texture" id=1]
+
+[sub_resource type="NavigationPolygon" id=55]
+vertices = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+
+[sub_resource type="NavigationPolygon" id=56]
+vertices = PoolVector2Array( 48, 48, 0, 48, 0, 0, 48, 0 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
@@ -32,6 +40,10 @@ points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 [sub_resource type="ConvexPolygonShape2D" id=10]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 
+[sub_resource type="NavigationPolygon" id=57]
+vertices = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+
 [sub_resource type="ConvexPolygonShape2D" id=11]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 
@@ -61,6 +73,10 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 
 [sub_resource type="ConvexPolygonShape2D" id=20]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
+
+[sub_resource type="NavigationPolygon" id=58]
+vertices = PoolVector2Array( 0, 0, 48, 0, 48, 48, 0, 48 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 
 [sub_resource type="ConvexPolygonShape2D" id=21]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -173,6 +189,7 @@ points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 0/tile_mode = 0
 0/occluder_offset = Vector2( 0, 0 )
 0/navigation_offset = Vector2( 0, 0 )
+0/navigation = SubResource( 55 )
 0/shape_offset = Vector2( 0, 0 )
 0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 0/shape_one_way = false
@@ -187,6 +204,7 @@ points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 1/tile_mode = 0
 1/occluder_offset = Vector2( 0, 0 )
 1/navigation_offset = Vector2( 0, 0 )
+1/navigation = SubResource( 56 )
 1/shape_offset = Vector2( 0, 0 )
 1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 1/shape_one_way = false
@@ -201,6 +219,7 @@ points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 2/tile_mode = 0
 2/occluder_offset = Vector2( 0, 0 )
 2/navigation_offset = Vector2( 0, 0 )
+2/navigation = SubResource( 57 )
 2/shape_offset = Vector2( 0, 0 )
 2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 2/shape_one_way = false
@@ -215,6 +234,7 @@ points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 3/tile_mode = 0
 3/occluder_offset = Vector2( 0, 0 )
 3/navigation_offset = Vector2( 0, 0 )
+3/navigation = SubResource( 58 )
 3/shape_offset = Vector2( 0, 0 )
 3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 3/shape_one_way = false

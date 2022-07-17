@@ -22,8 +22,8 @@ onready var spotlight = $spotlight
 onready var SCREEN_CENTER = get_viewport_rect().size / 2
 const CAMERA_OFFSET_MULTIPLIER = 0.5
 
-const MOVE_SPEED = 60
-const ROLL_SPEED = 220
+const MOVE_SPEED = 80
+const ROLL_SPEED = 80
 
 const ROLL_DURATION = 0.6
 
@@ -217,26 +217,37 @@ func end_roll():
     state = State.MOVE
 
 func shoot():
+    print("DEBUG: Called shoot")
     if bullet_count == 0:
+        print("DEBUG: Exit because bullet count is 0")
         return
     if is_reloading():
+        print("DEBUG: Exit because is reloading")
         return
     if state != State.FAN and not bullet_ready:
+        print("DEBUG: Exit because bullet not ready. state: " + String(state) + " and bullet_ready: " + String(bullet_ready))
         return
     if state == State.FAN and fan_bullet_count == FAN_MAX_BULLETS:
+        print("Debug: Exit because state is fan and fan_bullet_count == FAN_MAX_BULLETS. This should never happen.")
+        state = State.MOVE
         return
 
     if state == State.ROLL:
+        end_roll()
         state = State.FAN
         fan_bullet_count = 0
+        print("DEBUG: Entered fan state")
 
     spawn_bullet()
     bullet_ready = false
     if state == State.FAN:
         fan_bullet_count += 1
+        print("DEBUG: Fan bullet count " + String(fan_bullet_count))
         if bullet_count == 0 or fan_bullet_count == FAN_MAX_BULLETS:
+            print("DEBUG: Setting state back to move. bullet_count: " + String(bullet_count) + " fan_bullet_count: " + String(fan_bullet_count))
             state = State.MOVE
         else:
+            print("DEBUG: Starting fan delay timer")
             fan_timer.start(FAN_DELAY)
     gun_sprite.play("shoot")
     gun_sprite.frame = 0
@@ -265,6 +276,7 @@ func _on_bullet_timer_finish():
     bullet_ready = true
 
 func _on_fan_timer_finish():
+    print("DEBUG: Fan timer finished")
     shoot()
 
 func reload():

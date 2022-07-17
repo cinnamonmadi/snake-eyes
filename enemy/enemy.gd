@@ -32,7 +32,7 @@ var state = State.MOVE
 var bullet_ready = true
 var aim_direction = Vector2.ZERO
 
-var health = 3
+var health = 1
 
 func _ready():
     add_to_group("enemies")

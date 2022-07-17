@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://ui/ui.gd" type="Script" id=1]
 [ext_resource path="res://ui/ui_diceroll.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://ui/gba_font.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://ui/ui_playerhead.png" type="Texture" id=8]
 [ext_resource path="res://ui/ui_textbox.png" type="Texture" id=9]
+[ext_resource path="res://ui/ui_diceroll_icons.png" type="Texture" id=10]
 
 [sub_resource type="DynamicFont" id=58]
 size = 12
@@ -218,6 +219,20 @@ custom_fonts/font = SubResource( 59 )
 text = "Hmm... exit and cash in now? Or roll the dice and keep going?"
 autowrap = true
 percent_visible = 0.0
+
+[node name="rightface" type="Sprite" parent="dice_roll"]
+visible = false
+texture = ExtResource( 10 )
+hframes = 3
+vframes = 8
+frame = 23
+
+[node name="leftface" type="Sprite" parent="dice_roll"]
+visible = false
+texture = ExtResource( 10 )
+hframes = 3
+vframes = 8
+frame = 19
 
 [node name="health" type="HBoxContainer" parent="."]
 margin_left = 10.0

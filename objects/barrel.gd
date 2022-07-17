@@ -10,6 +10,8 @@ export var piece_variants = 7
 export var piece_count = 7
 
 func _ready():
+    add_to_group("clear_on_death")
+
     piece_scene = load(piece_scene_path)
     sprite.connect("animation_finished", self, "_on_animation_finished")
     sprite.play("idle")

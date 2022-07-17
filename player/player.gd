@@ -4,6 +4,9 @@ onready var bullet_scene = preload("res://player/bullet.tscn")
 onready var gun_flash_scene = preload("res://player/gun_flash_effect.tscn")
 onready var bullet_shell_scene = preload("res://bits/bullet_shell.tscn")
 
+onready var reticle_fine = preload("res://reticle_fine.png")
+onready var reticle = preload("res://reticle.png")
+
 onready var entrypoint = get_parent().get_node("player_entrypoint")
 
 onready var sprite = $sprite
@@ -13,6 +16,8 @@ onready var fan_timer = $fan_timer
 onready var reload_timer = $reload_timer
 onready var iframe_timer = $iframe_timer
 onready var iframe_flash_timer = $iframe_flash_timer
+onready var shadow = $shadow
+onready var spotlight = $spotlight
 
 onready var SCREEN_CENTER = get_viewport_rect().size / 2
 const CAMERA_OFFSET_MULTIPLIER = 0.5
@@ -27,8 +32,8 @@ const FAN_DELAY = 0.1
 const FAN_MAX_BULLETS = 3
 const RELOAD_DURATION = 1.0
 
-const IFRAME_DURATION = 2.0
-const IFRAME_FLASH_DURATION = 0.2
+const IFRAME_DURATION = 1.0
+const IFRAME_FLASH_DURATION = 0.1
 
 enum State {
     ENTER,
@@ -59,10 +64,11 @@ var health = 4
 var max_health = 4
 
 var sprites_visible = true
-
-var has_rolled_dice = false
+var is_hovering_table = false
 
 func _ready():
+    Input.set_custom_mouse_cursor(reticle)
+
     fan_timer.connect("timeout", self, "_on_fan_timer_finish")
     reload_timer.connect("timeout", self, "_on_reload_timer_finish")
     iframe_timer.connect("timeout", self, "_on_iframe_timer_finish")
@@ -75,7 +81,7 @@ func _input(event):
     if state == State.DEAD or state == State.DICE:
         return
 
-    if event is InputEventMouseMotion:
+    if event is InputEventMouseMotion: 
         var mouse_offset = event.position - SCREEN_CENTER
         aim_direction = mouse_offset.normalized()
         camera.offset = mouse_offset * CAMERA_OFFSET_MULTIPLIER
@@ -134,9 +140,10 @@ func handle_input():
     if Input.is_action_just_pressed("reload"):
         reload()
     if Input.is_action_just_pressed("shoot"):
-        shoot()
-    if Input.is_action_just_pressed("interact"):
-        dice()
+        if is_hovering_table:
+            open_dice_prompt()
+        else:
+            shoot()
 
 func _process(_delta):
     if state == State.DEAD:
@@ -191,6 +198,9 @@ func update_animation(velocity: Vector2):
 func _on_animation_finished():
     if sprite.animation == "roll":
         end_roll()
+    elif sprite.animation == "die":
+        sprite.play("dead")
+        post_death()
 
 func _on_gun_animation_finished():
     if gun_sprite.animation == "shoot":
@@ -269,6 +279,8 @@ func _on_reload_timer_finish():
 func handle_enemy_bullet():
     if has_iframes():
         return
+    if state == State.DEAD:
+        return
     health -= 1
     iframe_start()
     if health <= 0:
@@ -276,8 +288,16 @@ func handle_enemy_bullet():
 
 func die():
     state = State.DEAD
-    sprite.visible = false
+    sprite.play("die")
     gun_sprite.visible = false
+    shadow.visible = false
+    get_parent().get_node("tilemap").visible = false
+    for node in get_tree().get_nodes_in_group("clear_on_death"):
+        node.queue_free()
+    spotlight.visible = true
+
+func post_death():
+    get_parent().get_node("ui").flash_gg()
 
 func iframe_start():
     iframe_timer.start(IFRAME_DURATION)
@@ -294,9 +314,5 @@ func _on_iframe_timer_finish():
 func _on_iframe_flash_timer_finish():
     sprites_visible = not sprites_visible
 
-func dice():
-    if get_tree().get_nodes_in_group("enemies").size() != 0:
-        return
-    if has_rolled_dice:
-        return
+func open_dice_prompt():
     state = State.DICE

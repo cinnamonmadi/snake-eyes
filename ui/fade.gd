@@ -9,7 +9,7 @@ enum State {
 }
 
 var state = State.FINISHED
-var fade_duration: float = 1.0
+var fade_duration: float = 0.5
 var fade_timer: float = 0.0
 
 func _ready():
@@ -29,13 +29,14 @@ func fade_in():
     color_rect.color.a = 1.0
 
 func _process(delta):
-    fade_timer -= delta
-    if fade_timer <= 0:
-        if state == State.FADE_OUT:
-            color_rect.color.a = 1.0
-        else:
-            color_rect.color.a = 0.0
-        state = State.FINISHED
+    if state != State.FINISHED:
+        fade_timer -= delta
+        if fade_timer <= 0:
+            if state == State.FADE_OUT:
+                color_rect.color.a = 1.0
+            elif state == State.FADE_IN:
+                color_rect.color.a = 0.0
+            state = State.FINISHED
 
     if state == State.FADE_OUT:
         color_rect.color.a = 1.0 - (fade_timer / fade_duration)

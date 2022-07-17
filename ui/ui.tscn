@@ -1,131 +1,200 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://ui/ui.gd" type="Script" id=1]
 [ext_resource path="res://ui/ui_diceroll.png" type="Texture" id=2]
+[ext_resource path="res://ui/health.gd" type="Script" id=3]
+[ext_resource path="res://ui/ui_buttons.png" type="Texture" id=4]
+[ext_resource path="res://ui/bankrupt.png" type="Texture" id=5]
 
-[sub_resource type="AtlasTexture" id=1]
+[sub_resource type="AtlasTexture" id=29]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=30]
+atlas = ExtResource( 2 )
+region = Rect2( 6240, 0, 240, 120 )
+
+[sub_resource type="AtlasTexture" id=31]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 240, 120 )
+
+[sub_resource type="AtlasTexture" id=32]
 atlas = ExtResource( 2 )
 region = Rect2( 240, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=33]
 atlas = ExtResource( 2 )
 region = Rect2( 480, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=34]
 atlas = ExtResource( 2 )
 region = Rect2( 720, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=35]
 atlas = ExtResource( 2 )
 region = Rect2( 960, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=36]
 atlas = ExtResource( 2 )
 region = Rect2( 1200, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=7]
+[sub_resource type="AtlasTexture" id=37]
 atlas = ExtResource( 2 )
 region = Rect2( 1440, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=8]
+[sub_resource type="AtlasTexture" id=38]
 atlas = ExtResource( 2 )
 region = Rect2( 1680, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=9]
+[sub_resource type="AtlasTexture" id=39]
 atlas = ExtResource( 2 )
 region = Rect2( 1920, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=10]
+[sub_resource type="AtlasTexture" id=40]
 atlas = ExtResource( 2 )
 region = Rect2( 2160, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=11]
+[sub_resource type="AtlasTexture" id=41]
 atlas = ExtResource( 2 )
 region = Rect2( 2400, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=12]
+[sub_resource type="AtlasTexture" id=42]
 atlas = ExtResource( 2 )
 region = Rect2( 2640, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=13]
+[sub_resource type="AtlasTexture" id=43]
 atlas = ExtResource( 2 )
 region = Rect2( 2880, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=14]
+[sub_resource type="AtlasTexture" id=44]
 atlas = ExtResource( 2 )
 region = Rect2( 3120, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=15]
+[sub_resource type="AtlasTexture" id=45]
 atlas = ExtResource( 2 )
 region = Rect2( 3360, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=16]
+[sub_resource type="AtlasTexture" id=46]
 atlas = ExtResource( 2 )
 region = Rect2( 3600, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=17]
+[sub_resource type="AtlasTexture" id=47]
 atlas = ExtResource( 2 )
 region = Rect2( 3840, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=18]
+[sub_resource type="AtlasTexture" id=48]
 atlas = ExtResource( 2 )
 region = Rect2( 4080, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=19]
+[sub_resource type="AtlasTexture" id=49]
 atlas = ExtResource( 2 )
 region = Rect2( 4320, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=20]
+[sub_resource type="AtlasTexture" id=50]
 atlas = ExtResource( 2 )
 region = Rect2( 4560, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=21]
+[sub_resource type="AtlasTexture" id=51]
 atlas = ExtResource( 2 )
 region = Rect2( 4800, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=22]
+[sub_resource type="AtlasTexture" id=52]
 atlas = ExtResource( 2 )
 region = Rect2( 5040, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=23]
+[sub_resource type="AtlasTexture" id=53]
 atlas = ExtResource( 2 )
 region = Rect2( 5280, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=24]
+[sub_resource type="AtlasTexture" id=54]
 atlas = ExtResource( 2 )
 region = Rect2( 5520, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=25]
+[sub_resource type="AtlasTexture" id=55]
 atlas = ExtResource( 2 )
 region = Rect2( 5760, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=26]
+[sub_resource type="AtlasTexture" id=56]
 atlas = ExtResource( 2 )
 region = Rect2( 6000, 0, 240, 120 )
 
+[sub_resource type="AtlasTexture" id=57]
+atlas = ExtResource( 2 )
+region = Rect2( 6240, 0, 240, 120 )
+
 [sub_resource type="SpriteFrames" id=27]
 animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ) ],
+"frames": [ SubResource( 29 ) ],
 "loop": true,
 "name": "default",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 30 ) ],
+"loop": true,
+"name": "results",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ), SubResource( 37 ), SubResource( 38 ), SubResource( 39 ), SubResource( 40 ), SubResource( 41 ), SubResource( 42 ), SubResource( 43 ), SubResource( 44 ), SubResource( 45 ), SubResource( 46 ), SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ), SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ), SubResource( 56 ), SubResource( 57 ) ],
+"loop": true,
+"name": "roll",
 "speed": 9.0
 } ]
+
+[sub_resource type="RectangleShape2D" id=28]
+extents = Vector2( 42, 18 )
 
 [node name="ui" type="CanvasLayer"]
 script = ExtResource( 1 )
 
 [node name="ammo_label" type="Label" parent="."]
+margin_top = 48.0
 margin_right = 40.0
-margin_bottom = 14.0
+margin_bottom = 62.0
 text = "6 / 6"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="dice_roll" type="AnimatedSprite" parent="."]
-position = Vector2( 240, 100 )
+visible = false
+position = Vector2( 240, 120 )
+scale = Vector2( 1.5, 1.5 )
 frames = SubResource( 27 )
+playing = true
+
+[node name="health" type="HBoxContainer" parent="."]
+margin_left = 10.0
+margin_top = 12.0
+margin_right = 129.0
+margin_bottom = 47.0
+custom_constants/separation = 20
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="buttons" type="Sprite" parent="."]
+visible = false
+position = Vector2( 363, 177 )
+texture = ExtResource( 4 )
+hframes = 3
+
+[node name="roll_button" type="Area2D" parent="buttons"]
+
+[node name="collider" type="CollisionShape2D" parent="buttons/roll_button"]
+position = Vector2( 0, -24 )
+shape = SubResource( 28 )
+
+[node name="exit_button" type="Area2D" parent="buttons"]
+position = Vector2( 0, 42 )
+
+[node name="collider" type="CollisionShape2D" parent="buttons/exit_button"]
+position = Vector2( 0, -24 )
+shape = SubResource( 28 )
+
+[node name="gg" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 240, 120 )
+texture = ExtResource( 5 )
+
+[node name="tween" type="Tween" parent="."]

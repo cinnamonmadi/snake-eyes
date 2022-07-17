@@ -1,0 +1,57 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://door.tscn" type="PackedScene" id=1]
+[ext_resource path="res://tiles.tres" type="TileSet" id=2]
+[ext_resource path="res://tilemap_door_exit.png" type="Texture" id=3]
+[ext_resource path="res://tilemap_table.png" type="Texture" id=4]
+[ext_resource path="res://tilemap_table_outline.png" type="Texture" id=5]
+[ext_resource path="res://exit_room.gd" type="Script" id=6]
+[ext_resource path="res://player/player.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ui/fade.tscn" type="PackedScene" id=8]
+[ext_resource path="res://ui/ui.tscn" type="PackedScene" id=10]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 22, 11 )
+
+[node name="world" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="tilemap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( 0, 23, 0, 1, 5, 0, 2, 5, 0, 3, 5, 0, 4, 5, 0, 5, 5, 0, 6, 5, 0, 7, 5, 0, 8, 5, 0, 9, 5, 0, 10, 25, 0, 65536, 26, 0, 65546, 28, 0, 131072, 26, 0, 131082, 28, 0, 196608, 26, 0, 196609, 2, 0, 196610, 2, 0, 196611, 2, 0, 196612, 2, 0, 196613, 2, 0, 196614, 2, 0, 196615, 2, 0, 196616, 2, 0, 196617, 2, 0, 196618, 28, 0, 262144, 26, 0, 262145, 2, 0, 262146, 2, 0, 262147, 2, 0, 262148, 2, 0, 262149, 2, 0, 262150, 2, 0, 262151, 2, 0, 262152, 2, 0, 262153, 2, 0, 262154, 28, 0, 327680, 26, 0, 327681, 2, 0, 327682, 2, 0, 327683, 2, 0, 327684, 2, 0, 327685, 2, 0, 327686, 2, 0, 327687, 2, 0, 327688, 2, 0, 327689, 2, 0, 327690, 28, 0, 393216, 26, 0, 393217, 2, 0, 393218, 2, 0, 393219, 2, 0, 393220, 2, 0, 393221, 2, 0, 393222, 2, 0, 393223, 2, 0, 393224, 2, 0, 393225, 2, 0, 393226, 28, 0, 458752, 26, 0, 458753, 2, 0, 458754, 2, 0, 458755, 2, 0, 458756, 2, 0, 458757, 2, 0, 458758, 2, 0, 458759, 2, 0, 458760, 2, 0, 458761, 2, 0, 458762, 28, 0, 524288, 26, 0, 524289, 2, 0, 524290, 2, 0, 524291, 2, 0, 524292, 2, 0, 524293, 2, 0, 524294, 2, 0, 524295, 2, 0, 524296, 2, 0, 524297, 2, 0, 524298, 28, 0, 589824, 26, 0, 589825, 2, 0, 589826, 2, 0, 589827, 2, 0, 589828, 2, 0, 589829, 2, 0, 589830, 2, 0, 589831, 2, 0, 589832, 2, 0, 589833, 2, 0, 589834, 28, 0, 655360, 29, 0, 655361, 12, 0, 655362, 12, 0, 655363, 13, 0, 655364, 2, 0, 655365, 2, 0, 655366, 2, 0, 655367, 11, 0, 655368, 12, 0, 655369, 12, 0, 655370, 31, 0, 720899, 26, 0, 720900, 2, 0, 720901, 2, 0, 720902, 2, 0, 720903, 28, 0, 786435, 26, 0, 786436, 2, 0, 786437, 2, 0, 786438, 2, 0, 786439, 28, 0, 851971, 29, 0, 851972, 30, 0, 851973, 30, 0, 851974, 30, 0, 851975, 31, 0 )
+
+[node name="door_exit" parent="." instance=ExtResource( 1 )]
+position = Vector2( 40, 36 )
+
+[node name="door_next" parent="." instance=ExtResource( 1 )]
+position = Vector2( 136, 36 )
+
+[node name="table" type="StaticBody2D" parent="."]
+position = Vector2( 88, 96 )
+
+[node name="sprite" type="Sprite" parent="table"]
+texture = ExtResource( 4 )
+
+[node name="outline" type="Sprite" parent="table"]
+visible = false
+texture = ExtResource( 5 )
+
+[node name="collider" type="CollisionShape2D" parent="table"]
+position = Vector2( 0, -7 )
+shape = SubResource( 1 )
+
+[node name="player_entrypoint" type="Node2D" parent="."]
+position = Vector2( 88, 144 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 40, 36 )
+texture = ExtResource( 3 )
+
+[node name="player" parent="." instance=ExtResource( 7 )]
+position = Vector2( 88, 188 )
+
+[node name="ui" parent="." instance=ExtResource( 10 )]
+
+[node name="fader" parent="." instance=ExtResource( 8 )]

@@ -16,6 +16,8 @@ var rotation_velocity: float = 0.0
 var use_3d_coordinates = true
 
 func _ready():
+    add_to_group("clear_on_death")
+
     despawn_timer.connect("timeout", self, "_on_despawn_timer_finish")
     if sprite.has_method("play"):
         sprite.play()

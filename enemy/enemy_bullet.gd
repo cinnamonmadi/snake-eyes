@@ -5,6 +5,8 @@ var SPEED = 300
 var direction = Vector2.ZERO
 
 func _ready():
+    add_to_group("clear_on_death")
+
     var _return_value = connect("body_entered", self, "_on_body_entered")
 
 func start(with_heading: Vector2):

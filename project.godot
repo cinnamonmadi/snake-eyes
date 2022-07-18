@@ -33,7 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="snake-eyes"
-run/main_scene="res://world.tscn"
+run/main_scene="res://title/title.tscn"
 config/icon="res://icon.png"
 
 [autoload]

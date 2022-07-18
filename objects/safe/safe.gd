@@ -5,6 +5,8 @@ onready var global = get_node("/root/Global")
 onready var sprite = $sprite
 onready var timer = $timer
 
+onready var break_sound = $break_sound
+
 var health = 3
 var piece_scene
 export var piece_scene_path = ""
@@ -45,6 +47,8 @@ func handle_player_bullet():
     if health <= 0:
         return
     health -= 1
+    if health == 0:
+        break_sound.play()
     sprite.play("hurt")
 
 func _on_animation_finished():

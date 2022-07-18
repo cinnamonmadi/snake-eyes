@@ -3,6 +3,8 @@ extends Bit
 onready var global = get_node("/root/Global")
 onready var player = get_parent().get_node("player")
 
+onready var collect_sound = $collect_sound
+
 var follow_player = false
 export var value = 1
 
@@ -20,6 +22,7 @@ func _process(delta):
 func _on_body_entered(body):
     if body.name == "player":
         sprite.play("collect_" + String(global.rng.randi_range(1, 3)))
+        collect_sound.play()
         if value == -1:
             player.health = 4
         else:

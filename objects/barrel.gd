@@ -3,6 +3,8 @@ extends StaticBody2D
 onready var global = get_node("/root/Global")
 onready var sprite = $sprite
 
+onready var break_sound = $break_sound
+
 var health = 1
 var piece_scene
 export var piece_scene_path = ""
@@ -21,6 +23,8 @@ func handle_player_bullet():
         return
     health -= 1
     sprite.play("hurt")
+    if health == 0:
+        break_sound.play()
 
 func _on_animation_finished():
     if sprite.animation == "hurt":

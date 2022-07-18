@@ -19,6 +19,9 @@ onready var iframe_flash_timer = $iframe_flash_timer
 onready var shadow = $shadow
 onready var spotlight = $spotlight
 
+onready var gun_sound = $gun_sound
+onready var reload_sound = $reload_sound
+
 onready var SCREEN_CENTER = get_viewport_rect().size / 2
 const CAMERA_OFFSET_MULTIPLIER = 0.5
 
@@ -244,6 +247,7 @@ func shoot():
         fan_bullet_count = 0
 
     spawn_bullet()
+    gun_sound.play()
     bullet_ready = false
     if state == State.FAN:
         fan_bullet_count += 1
@@ -282,6 +286,7 @@ func _on_fan_timer_finish():
 
 func reload():
     gun_sprite.play("reload")
+    reload_sound.play()
     is_reloading = true
 
 func finish_reloading():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=2]
+[gd_scene load_steps=68 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/gun_shoot.png" type="Texture" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://player/player_shadow.png" type="Texture" id=8]
 [ext_resource path="res://player/spotlight.png" type="Texture" id=9]
 [ext_resource path="res://player/gun_reload.png" type="Texture" id=10]
+[ext_resource path="res://player/revolver_1.wav" type="AudioStream" id=11]
+[ext_resource path="res://player/reload.wav" type="AudioStream" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 8 )
@@ -309,3 +311,9 @@ one_shot = true
 one_shot = true
 
 [node name="iframe_flash_timer" type="Timer" parent="."]
+
+[node name="gun_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+
+[node name="reload_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )

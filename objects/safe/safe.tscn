@@ -1,7 +1,28 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
+[ext_resource path="res://objects/break_object.wav" type="AudioStream" id=1]
 [ext_resource path="res://objects/safe/safe.gd" type="Script" id=2]
 [ext_resource path="res://objects/safe/safe.png" type="Texture" id=3]
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 3 )
+region = Rect2( 192, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 3 )
+region = Rect2( 224, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 3 )
+region = Rect2( 256, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 3 )
+region = Rect2( 288, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 3 )
+region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 3 )
@@ -23,28 +44,18 @@ region = Rect2( 128, 0, 32, 32 )
 atlas = ExtResource( 3 )
 region = Rect2( 160, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 3 )
-region = Rect2( 32, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 3 )
-region = Rect2( 192, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 3 )
-region = Rect2( 224, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 3 )
-region = Rect2( 256, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 3 )
-region = Rect2( 288, 0, 32, 32 )
-
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
+"frames": [ SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ) ],
+"loop": true,
+"name": "sheen",
+"speed": 7.0
+}, {
+"frames": [ SubResource( 11 ) ],
+"loop": true,
+"name": "hurt",
+"speed": 7.0
+}, {
 "frames": [ SubResource( 5 ) ],
 "loop": true,
 "name": "idle",
@@ -53,16 +64,6 @@ animations = [ {
 "frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
 "loop": true,
 "name": "death",
-"speed": 7.0
-}, {
-"frames": [ SubResource( 11 ) ],
-"loop": true,
-"name": "hurt",
-"speed": 7.0
-}, {
-"frames": [ SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ) ],
-"loop": true,
-"name": "sheen",
 "speed": 7.0
 } ]
 
@@ -84,3 +85,6 @@ animation = "death"
 shape = SubResource( 4 )
 
 [node name="timer" type="Timer" parent="."]
+
+[node name="break_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )

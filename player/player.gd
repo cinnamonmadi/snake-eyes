@@ -285,14 +285,9 @@ func _on_fan_timer_finish():
 	shoot()
 
 func reload():
-<<<<<<< HEAD
     gun_sprite.play("reload")
     reload_sound.play()
     is_reloading = true
-=======
-	gun_sprite.play("reload")
-	is_reloading = true
->>>>>>> ae2ba7844b06fbf8fe98860b4742436b07dc737f
 
 func finish_reloading():
 	bullet_ready = true

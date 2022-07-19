@@ -75,8 +75,8 @@ func _process(delta):
             if mouse_in_rect(button_continue_tl, button_continue_br):
                 get_parent().load_next_room("res://level_first.tscn", Safe.LootType.COIN_1)
                 continue_countdown = -1
+                continue_timer.stop()
         elif continue_countdown == 0:
-            print("hi")
             var title_scene = load("res://title/title.tscn")
             get_parent().get_parent().add_child(title_scene.instance())
             get_parent().queue_free()
@@ -96,6 +96,7 @@ func _process(delta):
                     $dice_roll/dialog.visible = false
                     set_dice_values()
                     dice_roll_screen.play("roll")
+                    $dice_roll_sound.play()
         elif dice_roll_screen.animation == "results":
             dice_frame = 3
             if Input.is_action_just_pressed("shoot"):

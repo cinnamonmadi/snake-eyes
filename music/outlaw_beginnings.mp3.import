@@ -11,5 +11,5 @@ dest_files=[ "res://.import/outlaw_beginnings.mp3-00725331fa3b5c1b097e50a3718c9a
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

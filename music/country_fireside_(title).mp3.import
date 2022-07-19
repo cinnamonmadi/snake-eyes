@@ -11,5 +11,5 @@ dest_files=[ "res://.import/country_fireside_(title).mp3-f305b5d61d300e706583294
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

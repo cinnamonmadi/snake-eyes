@@ -11,6 +11,7 @@ onready var reticle_fine = preload("res://reticle_fine.png")
 onready var reticle = preload("res://reticle.png")
 
 onready var entrypoint = get_parent().get_node("player_entrypoint")
+onready var tilemap = get_parent().get_node("tilemap")
 
 onready var sprite = $sprite
 onready var gun_sprite = $sprite_gun
@@ -24,6 +25,13 @@ onready var spotlight = $spotlight
 
 onready var gun_sound = $gun_sound
 onready var reload_sound = $reload_sound
+onready var hurt_sound = $hurt_sound
+onready var death_music = $death_music
+
+onready var footstep_wood_sound = $footstep_wood_sound
+onready var footstep_sand_sound = $footstep_sand_sound
+onready var footstep_timer = $footstep_timer
+const FOOTSTEP_TIMER_DELAY = 0.4
 
 onready var SCREEN_CENTER = get_viewport_rect().size / 2
 const CAMERA_OFFSET_MULTIPLIER = 0.5
@@ -83,6 +91,7 @@ func _ready():
     sprite.connect("animation_finished", self, "_on_animation_finished")
     gun_sprite.connect("animation_finished", self, "_on_gun_animation_finished")
     gun_sprite.play("idle")
+    footstep_timer.connect("timeout", self, "_on_footstep_timeout")
 
 func reset_values():
     health = 4
@@ -173,6 +182,13 @@ func _process(_delta):
         speed = MOVE_SPEED
         if position.distance_to(entrypoint.position) <= 5:
             state = State.MOVE
+    
+    if sprite.animation == "run":
+        if footstep_timer.is_stopped():
+            play_footstep_sound()
+            footstep_timer.start(FOOTSTEP_TIMER_DELAY)
+    else:
+        footstep_timer.stop()
 
     var velocity = speed * move_direction
     var actual_velocity = move_and_slide(velocity)
@@ -312,12 +328,18 @@ func handle_enemy_bullet():
     iframe_start()
     if health <= 0:
         die()
+    else:
+        hurt_sound.play()
 
 func die():
+    if state == State.DEAD:
+        return
     state = State.DEAD
     sprite.play("die")
+    death_music.play()
     gun_sprite.visible = false
     shadow.visible = false
+    footstep_timer.stop()
     get_parent().get_node("tilemap").visible = false
     for node in get_tree().get_nodes_in_group("clear_on_death"):
         node.queue_free()
@@ -343,3 +365,13 @@ func _on_iframe_flash_timer_finish():
 
 func open_dice_prompt():
     state = State.DICE
+
+func _on_footstep_timeout():
+    play_footstep_sound()
+
+func play_footstep_sound():
+    var current_tile = tilemap.get_cellv(tilemap.world_to_map(position))
+    if current_tile == 2 or current_tile == 3:
+        footstep_wood_sound.play()
+    elif current_tile == 0 or current_tile == 1:
+        footstep_sand_sound.play()

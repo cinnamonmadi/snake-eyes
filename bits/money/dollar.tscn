@@ -84,6 +84,7 @@ value = 20
 [node name="sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 9 )
 animation = "idle"
+frame = 3
 playing = true
 
 [node name="collider" type="CollisionShape2D" parent="."]
@@ -93,3 +94,4 @@ shape = SubResource( 1 )
 
 [node name="collect_sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+volume_db = -5.0

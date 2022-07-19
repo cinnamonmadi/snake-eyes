@@ -11,5 +11,5 @@ dest_files=[ "res://.import/lone_rider.mp3-0c4589ce7ea3a1d1e96d80036f73c3a7.mp3s
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

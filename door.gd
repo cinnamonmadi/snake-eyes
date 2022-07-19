@@ -19,6 +19,7 @@ func _ready():
 func open():
     if sprite.animation == "closed":
         sprite.play("open")
+        $door_sound.play()
 
 func close():
     if sprite.animation == "opened":

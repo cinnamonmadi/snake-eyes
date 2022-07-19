@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/footstep_sand.wav-3f9c7c693fe3e305ff4fef8337cc79fd.sample"
+
+[deps]
+
+source_file="res://player/footstep_sand.wav"
+dest_files=[ "res://.import/footstep_sand.wav-3f9c7c693fe3e305ff4fef8337cc79fd.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

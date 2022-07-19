@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=2]
+[gd_scene load_steps=96 format=2]
 
 [ext_resource path="res://ui/ui.gd" type="Script" id=1]
 [ext_resource path="res://ui/ui_diceroll.png" type="Texture" id=2]
@@ -20,10 +20,19 @@
 [ext_resource path="res://ui/ui_reload_4.png" type="Texture" id=18]
 [ext_resource path="res://ui/ui_reload_5.png" type="Texture" id=19]
 [ext_resource path="res://ui/ui_reload_1.png" type="Texture" id=20]
+[ext_resource path="res://ui/diceroll.wav" type="AudioStream" id=21]
 
 [sub_resource type="DynamicFont" id=58]
 size = 12
 font_data = ExtResource( 7 )
+
+[sub_resource type="AtlasTexture" id=29]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 240, 120 )
+
+[sub_resource type="AtlasTexture" id=30]
+atlas = ExtResource( 2 )
+region = Rect2( 6240, 0, 240, 120 )
 
 [sub_resource type="AtlasTexture" id=31]
 atlas = ExtResource( 2 )
@@ -133,30 +142,22 @@ region = Rect2( 6000, 0, 240, 120 )
 atlas = ExtResource( 2 )
 region = Rect2( 6240, 0, 240, 120 )
 
-[sub_resource type="AtlasTexture" id=30]
-atlas = ExtResource( 2 )
-region = Rect2( 6240, 0, 240, 120 )
-
-[sub_resource type="AtlasTexture" id=29]
-atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 240, 120 )
-
 [sub_resource type="SpriteFrames" id=27]
 animations = [ {
-"frames": [ SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ), SubResource( 37 ), SubResource( 38 ), SubResource( 39 ), SubResource( 40 ), SubResource( 41 ), SubResource( 42 ), SubResource( 43 ), SubResource( 44 ), SubResource( 45 ), SubResource( 46 ), SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ), SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ), SubResource( 56 ), SubResource( 57 ) ],
+"frames": [ SubResource( 29 ) ],
 "loop": true,
-"name": "roll",
-"speed": 9.0
+"name": "default",
+"speed": 5.0
 }, {
 "frames": [ SubResource( 30 ) ],
 "loop": true,
 "name": "results",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 29 ) ],
+"frames": [ SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ), SubResource( 37 ), SubResource( 38 ), SubResource( 39 ), SubResource( 40 ), SubResource( 41 ), SubResource( 42 ), SubResource( 43 ), SubResource( 44 ), SubResource( 45 ), SubResource( 46 ), SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ), SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ), SubResource( 56 ), SubResource( 57 ) ],
 "loop": true,
-"name": "default",
-"speed": 5.0
+"name": "roll",
+"speed": 9.0
 } ]
 
 [sub_resource type="DynamicFont" id=59]
@@ -168,10 +169,6 @@ extents = Vector2( 42, 18 )
 
 [sub_resource type="DynamicFont" id=60]
 font_data = ExtResource( 7 )
-
-[sub_resource type="AtlasTexture" id=63]
-atlas = ExtResource( 13 )
-region = Rect2( 686, 0, 98, 38 )
 
 [sub_resource type="AtlasTexture" id=64]
 atlas = ExtResource( 13 )
@@ -209,6 +206,10 @@ region = Rect2( 1078, 0, 98, 38 )
 atlas = ExtResource( 13 )
 region = Rect2( 1176, 0, 98, 38 )
 
+[sub_resource type="AtlasTexture" id=63]
+atlas = ExtResource( 13 )
+region = Rect2( 686, 0, 98, 38 )
+
 [sub_resource type="AtlasTexture" id=71]
 atlas = ExtResource( 13 )
 region = Rect2( 784, 0, 98, 38 )
@@ -219,11 +220,6 @@ region = Rect2( 882, 0, 98, 38 )
 
 [sub_resource type="SpriteFrames" id=73]
 animations = [ {
-"frames": [ SubResource( 63 ) ],
-"loop": true,
-"name": "spin",
-"speed": 9.0
-}, {
 "frames": [ SubResource( 64 ), SubResource( 65 ), SubResource( 66 ), SubResource( 67 ), SubResource( 68 ), SubResource( 69 ) ],
 "loop": true,
 "name": "reload",
@@ -237,6 +233,11 @@ animations = [ {
 "frames": [ SubResource( 61 ), SubResource( 62 ) ],
 "loop": true,
 "name": "fire",
+"speed": 9.0
+}, {
+"frames": [ SubResource( 63 ) ],
+"loop": true,
+"name": "spin",
 "speed": 9.0
 }, {
 "frames": [ SubResource( 71 ), SubResource( 72 ) ],
@@ -259,15 +260,15 @@ region = Rect2( 98, 0, 98, 38 )
 
 [sub_resource type="SpriteFrames" id=80]
 animations = [ {
-"frames": [  ],
-"loop": true,
-"name": "hidden",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 81 ) ],
 "loop": true,
 "name": "idle",
 "speed": 9.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "hidden",
+"speed": 5.0
 }, {
 "frames": [ SubResource( 82 ), SubResource( 83 ) ],
 "loop": true,
@@ -289,15 +290,15 @@ region = Rect2( 98, 0, 98, 38 )
 
 [sub_resource type="SpriteFrames" id=87]
 animations = [ {
-"frames": [  ],
-"loop": true,
-"name": "hidden",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 84 ) ],
 "loop": true,
 "name": "idle",
 "speed": 9.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "hidden",
+"speed": 5.0
 }, {
 "frames": [ SubResource( 85 ), SubResource( 86 ) ],
 "loop": true,
@@ -319,14 +320,14 @@ region = Rect2( 98, 0, 98, 38 )
 
 [sub_resource type="SpriteFrames" id=91]
 animations = [ {
-"frames": [  ],
-"loop": true,
-"name": "hidden",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 88 ) ],
 "loop": true,
 "name": "idle",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "hidden",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 89 ), SubResource( 90 ) ],
@@ -349,14 +350,14 @@ region = Rect2( 98, 0, 98, 38 )
 
 [sub_resource type="SpriteFrames" id=95]
 animations = [ {
-"frames": [  ],
-"loop": true,
-"name": "hidden",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 92 ) ],
 "loop": true,
 "name": "idle",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "hidden",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 93 ), SubResource( 94 ) ],
@@ -379,14 +380,14 @@ region = Rect2( 98, 0, 98, 38 )
 
 [sub_resource type="SpriteFrames" id=99]
 animations = [ {
-"frames": [  ],
-"loop": true,
-"name": "hidden",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 96 ) ],
 "loop": true,
 "name": "idle",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "hidden",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 97 ), SubResource( 98 ) ],
@@ -409,14 +410,14 @@ region = Rect2( 98, 0, 98, 38 )
 
 [sub_resource type="SpriteFrames" id=103]
 animations = [ {
-"frames": [  ],
-"loop": true,
-"name": "hidden",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 100 ) ],
 "loop": true,
 "name": "idle",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "hidden",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 101 ), SubResource( 102 ) ],
@@ -576,6 +577,7 @@ __meta__ = {
 one_shot = true
 
 [node name="reload" type="Control" parent="."]
+visible = false
 margin_left = 48.0
 margin_top = 40.0
 margin_right = 88.0
@@ -617,3 +619,6 @@ animation = "idle"
 [node name="fire" type="AnimatedSprite" parent="reload"]
 frames = SubResource( 76 )
 animation = "idle"
+
+[node name="dice_roll_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 21 )

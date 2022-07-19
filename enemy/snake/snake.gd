@@ -90,6 +90,8 @@ func handle_player_bullet():
 
 	health -= 1
 	sprite.play("hurt")
+	if health == 0:
+		$death_sound.play()
 	state = State.HURT
 
 func start_death():

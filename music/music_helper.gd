@@ -1,12 +1,12 @@
 extends Node2D
 
-onready var music = $music
+var music 
 
 export var music_loop_delay: float = 0.0
 var music_loop_timer: float = 0.0
 
 func _ready():
-    pass 
+    music = get_child(get_node("/root/Global").rng.randi_range(0, get_child_count() - 1))
 
 func _process(delta):
     if music_loop_timer > 0:

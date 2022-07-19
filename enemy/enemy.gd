@@ -9,6 +9,8 @@ onready var sprite = $sprite
 onready var collider = $collider
 onready var gun_sprite = $gun_sprite
 onready var shoot_timer = $shoot_timer
+onready var death_sound = $death_sound
+onready var fire_sound = $fire_sound
 
 const BULLET_SPAWN_RADIUS = 20
 
@@ -97,6 +99,8 @@ func handle_player_bullet():
 		return
 
 	health -= 1
+	if health == 0:
+		death_sound.play()
 	sprite.play("hurt")
 	state = State.HURT
 
@@ -115,6 +119,7 @@ func shoot():
 		new_flash.play("default")
 
 	gun_sprite.play("shoot")
+	fire_sound.play()
 
 func start_death():
 	state = State.DEATH

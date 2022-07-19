@@ -11,5 +11,5 @@ dest_files=[ "res://.import/western_adventures.mp3-d239fc8f2c6368369f07c8861aac1
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

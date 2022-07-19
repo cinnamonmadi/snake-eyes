@@ -11,5 +11,5 @@ dest_files=[ "res://.import/death_stinger.mp3-9e654adae3af4448cd0dacc66b0543a5.m
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

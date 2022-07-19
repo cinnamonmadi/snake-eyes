@@ -2,16 +2,11 @@ extends CanvasLayer
 
 onready var global = get_node("/root/Global")
 onready var player = get_parent().get_node("player")
-onready var ammo_label = $ammo_label
 onready var dice_roll_screen = $dice_roll
 onready var dice_right_face = $dice_roll/rightface
 onready var dice_left_face = $dice_roll/leftface
 onready var buttons = $buttons
 onready var continue_timer = $continue_timer
-
-var is_reloading = false
-var bullet_count = 6
-var bullet_max = 6
 
 var button_exit_tl
 var button_exit_br
@@ -121,13 +116,6 @@ func _process(delta):
         dice_right_face.frame_coords = Vector2(dice_frame, dice_left_value)
         dice_left_face.frame_coords = Vector2(dice_frame, dice_right_value)
 
-    if player.bullet_count != bullet_count: 
-        bullet_count = player.bullet_count
-        is_reloading = player.is_reloading
-        if is_reloading:
-            ammo_label.text = "Reloading..."
-        else:
-            ammo_label.text = String(bullet_count) + " / " + String(bullet_max)
     if player.coins != coins:
         coins = player.coins
         $coin_purse/label.text = String(coins)
@@ -137,7 +125,7 @@ func _process(delta):
                 break
     var hud_visible = player.state != player.State.DEAD and not dice_roll_screen.visible
     $health.visible = hud_visible
-    ammo_label.visible = hud_visible
+    $reload.visible = hud_visible
     $coin_purse.visible = hud_visible
 
 func _on_dice_roll_animation_finished():

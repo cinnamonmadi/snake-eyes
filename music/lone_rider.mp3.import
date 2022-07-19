@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/lone_rider.mp3-0c4589ce7ea3a1d1e96d80036f73c3a7.mp3str"
+
+[deps]
+
+source_file="res://music/lone_rider.mp3"
+dest_files=[ "res://.import/lone_rider.mp3-0c4589ce7ea3a1d1e96d80036f73c3a7.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

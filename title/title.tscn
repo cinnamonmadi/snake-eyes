@@ -1,9 +1,11 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://ui/gba_font.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://ui/fade.tscn" type="PackedScene" id=2]
 [ext_resource path="res://title/intro(1).png" type="Texture" id=3]
 [ext_resource path="res://title/title.gd" type="Script" id=4]
+[ext_resource path="res://music/country_fireside_(title).mp3" type="AudioStream" id=5]
+[ext_resource path="res://music/music_helper.gd" type="Script" id=6]
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 3 )
@@ -302,3 +304,9 @@ __meta__ = {
 [node name="fade" parent="." instance=ExtResource( 2 )]
 
 [node name="timer" type="Timer" parent="."]
+
+[node name="music_helper" type="Node2D" parent="."]
+script = ExtResource( 6 )
+
+[node name="music" type="AudioStreamPlayer" parent="music_helper"]
+stream = ExtResource( 5 )

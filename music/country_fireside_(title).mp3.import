@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/country_fireside_(title).mp3-f305b5d61d300e7065832940f4c23b0b.mp3str"
+
+[deps]
+
+source_file="res://music/country_fireside_(title).mp3"
+dest_files=[ "res://.import/country_fireside_(title).mp3-f305b5d61d300e7065832940f4c23b0b.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

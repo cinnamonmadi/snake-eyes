@@ -8,12 +8,16 @@ onready var sprite = $sprite
 onready var collider = $collider
 onready var shoot_timer = $shoot_timer
 
+export var use_pursuit_radius = true
+export var pursuit_radius = 200
+
 export var MOVE_SPEED = 40
 export var STRAFE_RADIUS = 100
 export var ATTACK_RADIUS = 150
 export var treasure_bomb_frame = -1
 
 var has_treasure_bombed = false
+var has_found_player = false
 
 enum State {
 	MOVE,
@@ -36,16 +40,22 @@ func _ready():
 
 	sprite.connect("animation_finished", self, "_on_animation_finished")
 
+	if not use_pursuit_radius: 
+		has_found_player = true
+
 func _process(_delta):
 	var velocity = Vector2.ZERO
 
 	if state == State.MOVE: 
 		aim_direction = position.direction_to(player.predicted_aim_position)
 
-		velocity = position.direction_to(player.position) * MOVE_SPEED
-
-		if player.position.distance_to(position) <= ATTACK_RADIUS:
-			attack()
+		if not has_found_player:
+			if position.distance_to(player.position) <= pursuit_radius:
+				has_found_player = true
+		if has_found_player:
+			velocity = position.direction_to(player.position) * MOVE_SPEED
+			if player.position.distance_to(position) <= ATTACK_RADIUS:
+				attack()
 
 	if state == State.DEATH and sprite.frame == treasure_bomb_frame and not has_treasure_bombed:
 		treasure_bomb()

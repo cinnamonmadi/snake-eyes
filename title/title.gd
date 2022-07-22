@@ -5,7 +5,7 @@ onready var prompt = $prompt
 onready var timer = $timer
 onready var intro = $intro
 
-onready var first_level = preload("res://level_first.tscn")
+onready var first_level = preload("res://levels/level_first.tscn")
 
 var first_level_scene
 

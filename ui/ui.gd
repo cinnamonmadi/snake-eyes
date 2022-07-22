@@ -73,7 +73,7 @@ func _process(delta):
         $gg/continue/countdown.text = String(continue_countdown)
         if continue_countdown != 0 and Input.is_action_just_pressed("shoot"):
             if mouse_in_rect(button_continue_tl, button_continue_br):
-                get_parent().load_next_room("res://level_first.tscn", Safe.LootType.COIN_1)
+                get_parent().load_next_room("res://levels/level_first.tscn", Safe.LootType.COIN_1)
                 continue_countdown = -1
                 continue_timer.stop()
         elif continue_countdown == 0:
@@ -137,7 +137,7 @@ func flash_gg():
     display_gg = true
 
 func set_dice_values():
-    dice_right_value = global.rng.randi_range(0, 7)
+    dice_right_value = global.rng.randi_range(0, 6)
     if dice_right_value >= 3:
         dice_right_value = DiceFace.SNAKE_1 + (dice_right_value - 3)
     dice_left_value = global.rng.randi_range(DiceFace.MONEY_1, DiceFace.HEART)
@@ -161,8 +161,8 @@ func get_next_loot_type():
 
 func get_next_room():
     if [DiceFace.ARMADILLO_1, DiceFace.ARMADILLO_2, DiceFace.ARMADILLO_3].has(dice_right_value):
-        return "res://level_armadillo.tscn"
+        return "res://levels/level_3.tscn"
     elif [DiceFace.SNAKE_1, DiceFace.SNAKE_2, DiceFace.SNAKE_3].has(dice_right_value):
-        return "res://level_snake2.tscn"
+        return "res://levels/level_2.tscn"
     else:
-        return "res://level_snake.tscn"
+        return "res://levels/level_1.tscn"

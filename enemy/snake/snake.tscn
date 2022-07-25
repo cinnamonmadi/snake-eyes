@@ -9,6 +9,22 @@
 [ext_resource path="res://enemy/snake/snake_attack.png" type="Texture" id=7]
 [ext_resource path="res://enemy/snake/snake_death.wav" type="AudioStream" id=8]
 
+[sub_resource type="AtlasTexture" id=38]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 42, 22 )
+
+[sub_resource type="AtlasTexture" id=39]
+atlas = ExtResource( 3 )
+region = Rect2( 42, 0, 42, 22 )
+
+[sub_resource type="AtlasTexture" id=40]
+atlas = ExtResource( 3 )
+region = Rect2( 84, 0, 42, 22 )
+
+[sub_resource type="AtlasTexture" id=41]
+atlas = ExtResource( 3 )
+region = Rect2( 126, 0, 42, 22 )
+
 [sub_resource type="AtlasTexture" id=43]
 atlas = ExtResource( 7 )
 region = Rect2( 0, 0, 42, 22 )
@@ -33,9 +49,21 @@ region = Rect2( 168, 0, 42, 22 )
 atlas = ExtResource( 7 )
 region = Rect2( 210, 0, 42, 22 )
 
-[sub_resource type="AtlasTexture" id=42]
-atlas = ExtResource( 2 )
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 42, 22 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 4 )
+region = Rect2( 42, 0, 42, 22 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 4 )
+region = Rect2( 84, 0, 42, 22 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 4 )
+region = Rect2( 126, 0, 42, 22 )
 
 [sub_resource type="AtlasTexture" id=24]
 atlas = ExtResource( 1 )
@@ -93,83 +121,52 @@ region = Rect2( 504, 0, 42, 26 )
 atlas = ExtResource( 1 )
 region = Rect2( 546, 0, 42, 26 )
 
-[sub_resource type="AtlasTexture" id=20]
-atlas = ExtResource( 4 )
+[sub_resource type="AtlasTexture" id=42]
+atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 42, 22 )
-
-[sub_resource type="AtlasTexture" id=21]
-atlas = ExtResource( 4 )
-region = Rect2( 42, 0, 42, 22 )
-
-[sub_resource type="AtlasTexture" id=22]
-atlas = ExtResource( 4 )
-region = Rect2( 84, 0, 42, 22 )
-
-[sub_resource type="AtlasTexture" id=23]
-atlas = ExtResource( 4 )
-region = Rect2( 126, 0, 42, 22 )
-
-[sub_resource type="AtlasTexture" id=38]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 42, 22 )
-
-[sub_resource type="AtlasTexture" id=39]
-atlas = ExtResource( 3 )
-region = Rect2( 42, 0, 42, 22 )
-
-[sub_resource type="AtlasTexture" id=40]
-atlas = ExtResource( 3 )
-region = Rect2( 84, 0, 42, 22 )
-
-[sub_resource type="AtlasTexture" id=41]
-atlas = ExtResource( 3 )
-region = Rect2( 126, 0, 42, 22 )
 
 [sub_resource type="SpriteFrames" id=18]
 animations = [ {
+"frames": [ SubResource( 38 ), SubResource( 39 ), SubResource( 40 ), SubResource( 41 ) ],
+"loop": true,
+"name": "run",
+"speed": 7.0
+}, {
 "frames": [ SubResource( 43 ), SubResource( 44 ), SubResource( 45 ), SubResource( 46 ), SubResource( 47 ), SubResource( 48 ) ],
 "loop": true,
 "name": "attack",
 "speed": 7.0
-}, {
-"frames": [ SubResource( 42 ) ],
-"loop": true,
-"name": "hurt",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ), SubResource( 37 ) ],
-"loop": true,
-"name": "death",
-"speed": 12.0
 }, {
 "frames": [ SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ) ],
 "loop": true,
 "name": "idle",
 "speed": 7.0
 }, {
-"frames": [ SubResource( 38 ), SubResource( 39 ), SubResource( 40 ), SubResource( 41 ) ],
+"frames": [ SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ), SubResource( 37 ) ],
 "loop": true,
-"name": "run",
-"speed": 7.0
+"name": "death",
+"speed": 12.0
+}, {
+"frames": [ SubResource( 42 ) ],
+"loop": true,
+"name": "hurt",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=19]
-extents = Vector2( 8, 8 )
+extents = Vector2( 6, 6 )
 
 [node name="snake" type="KinematicBody2D"]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 6 )
-ATTACK_RADIUS = 30
-treasure_bomb_frame = 10
 
 [node name="shadow" type="Sprite" parent="."]
 texture = ExtResource( 5 )
 
 [node name="sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 18 )
-animation = "attack"
-frame = 3
+animation = "idle"
 flip_h = true
 
 [node name="collider" type="CollisionShape2D" parent="."]
@@ -182,3 +179,6 @@ one_shot = true
 
 [node name="death_sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
+
+[node name="Line2D" type="Line2D" parent="."]
+width = 2.0

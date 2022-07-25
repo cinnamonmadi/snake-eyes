@@ -7,6 +7,7 @@ onready var fire = $fire
 onready var bullets = [$bullet_1, $bullet_2, $bullet_3, $bullet_4, $bullet_5, $bullet_6]
 
 var player_bullets = 6
+var bullet_to_be_removed = false
 
 func _ready():
     barrel.connect("animation_finished", self, "_on_barrel_animation_finished")
@@ -27,8 +28,12 @@ func update_displayed_bullets():
         player_bullets = player.bullet_count
         for i in range(0, bullets.size()):
             bullets[i].visible = (i + 1) <= player_bullets
+    bullet_to_be_removed = false
 
 func _on_player_shoot():
+    if bullet_to_be_removed:
+        update_displayed_bullets()
+    bullet_to_be_removed = true
     play_fire()
 
 func _on_player_reload():

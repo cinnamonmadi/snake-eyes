@@ -58,36 +58,80 @@ stream = ExtResource( 13 )
 
 [node name="armadillo" parent="." instance=ExtResource( 6 )]
 position = Vector2( 40, 236 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo2" parent="." instance=ExtResource( 6 )]
 position = Vector2( 752, 212 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo3" parent="." instance=ExtResource( 6 )]
 position = Vector2( 840, 144 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo4" parent="." instance=ExtResource( 6 )]
 position = Vector2( 136, 420 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo5" parent="." instance=ExtResource( 6 )]
 position = Vector2( -8, 4 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo6" parent="." instance=ExtResource( 6 )]
 position = Vector2( 176, -168 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo7" parent="." instance=ExtResource( 6 )]
 position = Vector2( 236, -180 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo8" parent="." instance=ExtResource( 6 )]
 position = Vector2( 420, -220 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo9" parent="." instance=ExtResource( 6 )]
 position = Vector2( 628, -220 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo10" parent="." instance=ExtResource( 6 )]
 position = Vector2( 792, -212 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo11" parent="." instance=ExtResource( 6 )]
 position = Vector2( 832, -168 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="snake" parent="." instance=ExtResource( 11 )]
 position = Vector2( 208, 244 )

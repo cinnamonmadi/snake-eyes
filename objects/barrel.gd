@@ -2,6 +2,7 @@ extends StaticBody2D
 
 onready var global = get_node("/root/Global")
 onready var sprite = $sprite
+onready var collider = $collider
 
 onready var break_sound = $break_sound
 

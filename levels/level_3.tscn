@@ -48,60 +48,136 @@ position = Vector2( 664, -96 )
 
 [node name="armadillo" parent="." instance=ExtResource( 8 )]
 position = Vector2( 604, 516 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo2" parent="." instance=ExtResource( 8 )]
 position = Vector2( 736, 532 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo3" parent="." instance=ExtResource( 8 )]
 position = Vector2( 712, 592 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo4" parent="." instance=ExtResource( 8 )]
 position = Vector2( 900, 528 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo5" parent="." instance=ExtResource( 8 )]
 position = Vector2( 940, 492 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo6" parent="." instance=ExtResource( 8 )]
 position = Vector2( 1060, 524 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo7" parent="." instance=ExtResource( 8 )]
 position = Vector2( 1084, 560 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo8" parent="." instance=ExtResource( 8 )]
 position = Vector2( 1060, 628 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo9" parent="." instance=ExtResource( 8 )]
 position = Vector2( 664, 448 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo10" parent="." instance=ExtResource( 8 )]
 position = Vector2( 592, 376 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo11" parent="." instance=ExtResource( 8 )]
 position = Vector2( 736, 288 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo12" parent="." instance=ExtResource( 8 )]
 position = Vector2( 740, 240 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo13" parent="." instance=ExtResource( 8 )]
 position = Vector2( 652, 228 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo14" parent="." instance=ExtResource( 8 )]
 position = Vector2( 588, 196 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo15" parent="." instance=ExtResource( 8 )]
 position = Vector2( 628, 108 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo16" parent="." instance=ExtResource( 8 )]
 position = Vector2( 704, 64 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo17" parent="." instance=ExtResource( 8 )]
 position = Vector2( 708, -80 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo18" parent="." instance=ExtResource( 8 )]
 position = Vector2( 692, -120 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="armadillo19" parent="." instance=ExtResource( 8 )]
 position = Vector2( 608, -120 )
+MOVE_SPEED = null
+BULLET_SPEED = null
+STRAFE_RADIUS = null
+FIRE_RADIUS = null
 
 [node name="barrel" parent="." instance=ExtResource( 9 )]
 position = Vector2( 244, 496 )

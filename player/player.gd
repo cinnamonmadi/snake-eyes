@@ -11,7 +11,7 @@ onready var reticle_fine = preload("res://reticle_fine.png")
 onready var reticle = preload("res://reticle.png")
 
 onready var entrypoint = get_parent().get_node("player_entrypoint")
-onready var tilemap = get_parent().get_node("tilemap")
+onready var tilemap = get_parent().get_node("nav/tilemap")
 
 onready var sprite = $sprite
 onready var gun_sprite = $sprite_gun

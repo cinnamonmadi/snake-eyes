@@ -40,6 +40,7 @@ enum SpriteOrientation {
 export(SpriteOrientation) var SPRITE_ORIENTATION = SpriteOrientation.RIGHT
 
 enum State {
+    SPAWN,
     MOVE,
     ATTACK,
     HURT,
@@ -80,13 +81,23 @@ func _ready():
 
     health = MAX_HEALTH
 
+func spawn(at_position: Vector2):
+    position = at_position
+    modulate.a = 0.0
+    state = State.SPAWN
+
 func _process(delta):
     if player == null:
         player = get_parent().get_node("player")
         return
 
     var velocity = Vector2.ZERO
-    $Line2D.global_position = Vector2.ZERO
+
+    if state == State.SPAWN:
+        modulate.a += delta
+        if modulate.a >= 1.0:
+            modulate.a = 1.0
+            state = State.MOVE
 
     if state == State.MOVE: 
         aim_direction = position.direction_to(player.predicted_aim_position)
@@ -109,7 +120,6 @@ func _process(delta):
 
                 # Try pathfinding, otherwise just go to target_position
                 path = nav.get_simple_path(position, target_position, false)
-                $Line2D.points = path
                 while path.size() != 0 and position.distance_to(path[0]) <= 16:
                     path.remove(0)
                 if path.size() != 0:

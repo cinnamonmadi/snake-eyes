@@ -336,15 +336,14 @@ func die():
         return
     state = State.DEAD
     sprite.play("die")
-    get_parent().get_node("music_helper").stop()
+    var music_helper = get_parent().get_node("music_helper")
+    if music_helper != null:
+        get_parent().get_node("music_helper").stop()
     death_music.play()
     gun_sprite.visible = false
     shadow.visible = false
     footstep_timer.stop()
-    get_parent().get_node("tilemap").visible = false
-    var tilemap_2 = get_parent().get_node("tilemap2") 
-    if tilemap_2 != null:
-        tilemap_2.visible = false
+    get_parent().get_node("nav").visible = false
     for node in get_tree().get_nodes_in_group("clear_on_death"):
         node.queue_free()
     spotlight.visible = true

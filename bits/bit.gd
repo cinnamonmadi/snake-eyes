@@ -14,13 +14,20 @@ var position_3d = Vector3.ZERO
 var velocity_3d = Vector3.ZERO
 var rotation_velocity: float = 0.0
 var use_3d_coordinates = true
+var has_hit_wall = false
 
 func _ready():
     add_to_group("clear_on_death")
 
+    var _return_value = self.connect("body_entered", self, "_on_body_entered")
+
     despawn_timer.connect("timeout", self, "_on_despawn_timer_finish")
     if sprite.has_method("play"):
         sprite.play()
+
+func _on_body_entered(_body):
+    velocity_3d = Vector3(0, 0, 0)
+    has_hit_wall = true
 
 func set_position_3d(position_2d: Vector2, start_height: float):
     position_3d = Vector3(position_2d.x, position_2d.y + start_height, start_height)
@@ -30,8 +37,9 @@ func set_velocity_3d(velocity_2d: Vector2, start_vz: float):
     velocity_3d = Vector3(velocity_2d.x, velocity_2d.y / 2, start_vz)
 
 func _process(delta):
-    velocity_3d.z += GRAVITY * delta
-    position_3d += velocity_3d * delta
+    if not has_hit_wall:
+        velocity_3d.z += GRAVITY * delta
+        position_3d += velocity_3d * delta
 
     var rotation_mod = 1
     if velocity_3d.x < 0:

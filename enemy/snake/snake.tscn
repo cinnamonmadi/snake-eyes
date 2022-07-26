@@ -179,6 +179,3 @@ one_shot = true
 
 [node name="death_sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
-
-[node name="Line2D" type="Line2D" parent="."]
-width = 2.0
